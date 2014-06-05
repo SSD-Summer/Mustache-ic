@@ -5,7 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
-
+*.FileListAbsolute.txt
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
