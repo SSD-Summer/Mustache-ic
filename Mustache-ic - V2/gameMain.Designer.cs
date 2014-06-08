@@ -92,6 +92,9 @@
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.Button button_leaderboard;
         private System.Windows.Forms.ImageList imageList_animals;
+        private System.Windows.Forms.ImageList imageList;
+
+
 
     }
 }

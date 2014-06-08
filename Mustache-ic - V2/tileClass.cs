@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.ComponentModel;
 
 namespace Mustashe_ic
 {
@@ -12,26 +14,34 @@ namespace Mustashe_ic
         public bool correctObject { get; set; }
         public System.Windows.Forms.Button tile { get; set; }
         
+        
+        
+        
 
         public tileClass()
         {
             correctObject = false;
             tile = new System.Windows.Forms.Button();
             tile.Click += new EventHandler(tile_clicked);
+           
         }
 
         public tileClass(bool val)
         {
             correctObject = val;
             tile = new System.Windows.Forms.Button();
+          
+   
         }
 
-        public void refreshTile()
+        public tileClass tileImage(tileClass Tile)
         {
-            //change tile image
-            //sim fade in and out
+
+            return Tile;
+            
         }
 
+        
         public void hideTile()
         {
             this.tile.Hide();

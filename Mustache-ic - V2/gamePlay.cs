@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-
+using System.Drawing;
+using System.ComponentModel;
 namespace Mustashe_ic
 {
+   
+
     /// <summary>
     /// Holds all the form controls and game items for playing.
     /// </summary>
@@ -17,11 +20,18 @@ namespace Mustashe_ic
         public int timer { set; get; } //Probably will change to helper class
         int count; //This is the variable used to keep track of how often to hide a tile 
         int hide_speed;//randX, randY; //ints used as random vars
+
+        int image_num;//uses rand to select a random image number
+        int num, min_val, max_val;//integers for random number generator
         Random rand; //Random generator - Will probably move 
         Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
+       
+        
+        //System.Windows.Forms.ImageList imageList;
 
         public System.Windows.Forms.Label label_lives, label_timer, label_score;
         public System.Windows.Forms.Panel panel_tile_holder;
+
 
         /// <summary>
         /// Initalizes an instance of the game
@@ -68,8 +78,19 @@ namespace Mustashe_ic
             rand = new Random();  //needed for random generation
             count = rand.Next(hide_speed); //get random tile wait time
             hiddenList = new Queue<Tuple<int, int>>(); //initalizes queue to hold the hidden tiles
+            //imageList = new System.Windows.Forms.ImageList();
+            
+            
+                      
 
-
+        }
+        //created this method for num generator, might be able to use for all generator numbers once overloaded
+        private int num_Generator(int min_val, int max_val)
+        {
+            
+           Random rand = new Random();
+           num = rand.Next(min_val, max_val);
+           return num;
         }
         /// <summary>
         /// Initalizes the tile board onto panel_tile_holder
@@ -78,20 +99,55 @@ namespace Mustashe_ic
         private void init_board(int size) //Creates a size X size grid of tiles 
         {
             board = new tileClass[size, size];
+            /*imageList = new System.Windows.Forms.ImageList();
+            imageList.Images.Add(
+                Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\bird.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\chicken.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\bronc.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\cat.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\crab.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\dog.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\goldfish.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\pig.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\jellyfish.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\sheep.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\steg.jpg"));
+            imageList.Images.Add(
+               Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\t_rex.jpg"));*/
+            
+            
 
             for (int i = 0; i < size; ++i)
             {
                 for (int j = 0; j < size; ++j)    // This is where I print the gameboard into the panel 
                 {
+                    
                     board[i, j] = new tileClass();
                     board[i, j].tile.Size = new System.Drawing.Size(100, 100);
                     board[i, j].tile.Location = new System.Drawing.Point(i * 125 + 5, j * 100 + 5);
+                    //
+                    //sets each tile to image from the the imageList
+                    board[i, j].tile.BackgroundImage = board[i, j].refreshTile();
+                    
+                    
                     //board[i, j].tile.Click += new EventHandler(tile_clicked);
                     panel_tile_holder.Controls.Add(board[i, j].tile);
                 }
             }
 
         }
+
+        
 
         
         /// <summary>
