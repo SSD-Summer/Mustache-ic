@@ -22,6 +22,7 @@ namespace Mustashe_ic
 
         System.Windows.Forms.Timer game_timer;
         System.Windows.Forms.Timer labelTimer;
+        System.Windows.Forms.Label countDown;
         private string ready = "Ready";
         private string set = "Set";
         private string go = "GO!";
@@ -76,6 +77,7 @@ namespace Mustashe_ic
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
             //button_world1.Click += new System.EventHandler(world_startGame);
             button_world1.Click += new System.EventHandler(level_countdown);
+            
             this.Controls.Add(button_world1);
         }
         bool countdown_done = false;
@@ -87,11 +89,20 @@ namespace Mustashe_ic
         private void level_countdown(object sender, EventArgs e)
         {
             button_world1.Hide();
+            //countDown.AutoSize = true;
+            //countDown.BackColor = System.Drawing.Color.Transparent;
+            //countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold);
+            //countDown.Location = new System.Drawing.Point(235, 259);
+            //countDown.Name = "label_countDown";
+            //countDown.Size = new System.Drawing.Size(208, 84);
+            //countDown.Text = "Ready";
+            //this.Controls.Add(countDown);
             countDown.Visible = true;
             countDown.Text = ready;
 
             labelTimer = new Timer();
             labelTimer.Tick += new EventHandler(labelTimer_tick);
+            labelTimer.Disposed += new EventHandler(world_startGame);
             labelTimer.Interval = 2000;
             labelTimer.Enabled = true;
 
@@ -109,6 +120,11 @@ namespace Mustashe_ic
         private void labelTimer_tick(object sender, EventArgs e)
         {
 
+            if (count > 3)
+            {
+                labelTimer.Dispose();
+            }
+
             switch (count)
             {
                 case 1:
@@ -118,17 +134,16 @@ namespace Mustashe_ic
                     this.countDown.Text = go;
                     break;
                 default:
-                    labelTimer.Enabled = false;
+                    //labelTimer.Enabled = false;
                     countdown_done = true;
                     break;
             }
             count++;
 
-            if(count > 3){
-                labelTimer.Dispose();
-            }
+            
 
         }
+
        
         private void world_startGame(object sender, EventArgs e)
         {
