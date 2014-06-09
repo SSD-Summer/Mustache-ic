@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using System.Timers;
 
 namespace Mustashe_ic
 {
@@ -16,14 +18,21 @@ namespace Mustashe_ic
         System.Windows.Forms.Button button_worldsMode;
         System.Windows.Forms.Button button_endlessMode;
         System.Windows.Forms.Button button_world1;
+        System.Windows.Forms.Panel panel_results;
 
         System.Windows.Forms.Timer game_timer;
-
+        System.Windows.Forms.Timer labelTimer;
+        private string ready = "Ready";
+        private string set = "Set";
+        private string go = "GO!";
+        private int score = 0;
+        
         gamePlay game;
         public gameMain()
         {
             InitializeComponent();
             //gamePlay game = new gamePlay(this, 4, 1);
+            
 
         }
 
@@ -65,20 +74,77 @@ namespace Mustashe_ic
             button_world1.AutoSize = true;
             button_world1.Location = new Point(20, 20);
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
-            button_world1.Click += new System.EventHandler(world_startGame);
+            //button_world1.Click += new System.EventHandler(world_startGame);
+            button_world1.Click += new System.EventHandler(level_countdown);
             this.Controls.Add(button_world1);
+        }
+        bool countdown_done = false;
+        /// <summary>
+        /// begins "ready, set, go" message. then moves to world_startGame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void level_countdown(object sender, EventArgs e)
+        {
+            button_world1.Hide();
+            countDown.Visible = true;
+            countDown.Text = ready;
+
+            labelTimer = new Timer();
+            labelTimer.Tick += new EventHandler(labelTimer_tick);
+            labelTimer.Interval = 2000;
+            labelTimer.Enabled = true;
+
+            if (countdown_done == true) //doesn't get to this
+            {
+                countDown.Visible = false;
+                //labelTimer. += new EventHandler(world_startGame); //is there a way to create an event with the timer?
+            }
+        }
+
+        /// <summary>
+        /// timer for the "ready set go" message before level starts. 
+        /// </summary>
+        private static int count = 1;
+        private void labelTimer_tick(object sender, EventArgs e)
+        {
+
+            switch (count)
+            {
+                case 1:
+                    this.countDown.Text = set;
+                    break;
+                case 2:
+                    this.countDown.Text = go;
+                    break;
+                default:
+                    labelTimer.Enabled = false;
+                    countdown_done = true;
+                    break;
+            }
+            count++;
+
+            if(count > 3){
+                labelTimer.Dispose();
+            }
+
         }
        
         private void world_startGame(object sender, EventArgs e)
         {
-            button_world1.Hide();
+
 
             game = new gamePlay(this, 3, 1);
 
-            game_timer = new Timer();
+            game_timer = new System.Windows.Forms.Timer();
             game_timer.Tick += new EventHandler(timer_Tick);
             game_timer.Interval = 1000;
             game_timer.Start();
+
+            if (game.timer == 0)
+            {
+               
+            }
 
         }
 
@@ -92,6 +158,31 @@ namespace Mustashe_ic
 
             game.gameTick();
         }
+
+        private void results(object sender, EventArgs e)
+        {
+            int passingScore = 1000;
+            panel_results = new Panel();
+            panel_results.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_results.Location = new System.Drawing.Point(0, 0);
+            panel_results.Size = new System.Drawing.Size(698, 715);
+            panel_results.TabIndex = 4;
+            this.Controls.Add(panel_results);
+
+            System.Windows.Forms.Label label_score = new Label();
+            System.Windows.Forms.Label label_win_lose = new Label();
+
+            if (score >= passingScore)
+            {
+                label_win_lose.Name = "You Win!"; 
+            }
+            else
+            {
+                label_win_lose.Name = "You Lose!";
+            }
+        }
+
+
 
     }
 }

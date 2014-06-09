@@ -33,13 +33,14 @@
             this.button_start = new System.Windows.Forms.Button();
             this.button_leaderboard = new System.Windows.Forms.Button();
             this.imageList_animals = new System.Windows.Forms.ImageList(this.components);
+            this.countDown = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button_start
             // 
             this.button_start.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_start.Location = new System.Drawing.Point(210, 151);
-            this.button_start.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_start.Margin = new System.Windows.Forms.Padding(2);
             this.button_start.Name = "button_start";
             this.button_start.Size = new System.Drawing.Size(298, 106);
             this.button_start.TabIndex = 1;
@@ -51,7 +52,7 @@
             // 
             this.button_leaderboard.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_leaderboard.Location = new System.Drawing.Point(210, 317);
-            this.button_leaderboard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_leaderboard.Margin = new System.Windows.Forms.Padding(2);
             this.button_leaderboard.Name = "button_leaderboard";
             this.button_leaderboard.Size = new System.Drawing.Size(298, 116);
             this.button_leaderboard.TabIndex = 2;
@@ -72,18 +73,32 @@
             this.imageList_animals.Images.SetKeyName(7, "bronc.jpg");
             this.imageList_animals.Images.SetKeyName(8, "steg.jpg");
             // 
+            // countDown
+            // 
+            this.countDown.AutoSize = true;
+            this.countDown.BackColor = System.Drawing.Color.Transparent;
+            this.countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.countDown.Location = new System.Drawing.Point(235, 259);
+            this.countDown.Name = "countDown";
+            this.countDown.Size = new System.Drawing.Size(208, 84);
+            this.countDown.TabIndex = 3;
+            this.countDown.Text = "Ready";
+            this.countDown.Visible = false;
+            // 
             // gameMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Mustache_ic___V2.Properties.Resources.title;
             this.ClientSize = new System.Drawing.Size(698, 715);
+            this.Controls.Add(this.countDown);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "gameMain";
             this.Text = "gameMain";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -92,9 +107,6 @@
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.Button button_leaderboard;
         private System.Windows.Forms.ImageList imageList_animals;
-        private System.Windows.Forms.ImageList imageList;
-
-
 
     }
 }
