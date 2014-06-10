@@ -55,8 +55,7 @@ namespace Mustashe_ic
 
 
       //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
-       
-
+  
         public void tileImage(int image_num)
         {
             this.components = new System.ComponentModel.Container();
@@ -79,6 +78,7 @@ namespace Mustashe_ic
             this.imageList_animals.Images.SetKeyName(10, "pig.jpg");
             this.imageList_animals.Images.SetKeyName(11, "sheep.jpg");
 
+            //this.imageList_animals.Images.Add(global::Mustache_ic___V2.Properties.Resources.bird);
 
            /*alive_imageList = new System.Windows.Forms.ImageList();
            alive_imageList.ImageSize = new Size(100, 100); //makes the images same size as button
