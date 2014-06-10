@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel;
 
+
 namespace Mustashe_ic
 {
-    
-            
+
     class tileClass
     {
 
@@ -17,10 +17,16 @@ namespace Mustashe_ic
         public System.Windows.Forms.Button tile { get; set; }
         public System.Windows.Forms.ImageList alive_imageList;
         public System.Windows.Forms.ImageList dead_imageList;
+        public System.Windows.Forms.ImageList imageList_animals;
 
-        private int num;
-            
+        private System.ComponentModel.IContainer components = null;
+        
 
+        private int num;       
+
+        
+        //public System.Windows.Forms.ImageList imageList_animals;
+        //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gameMain));*/
         public tileClass()
         {
             correctObject = false;
@@ -37,7 +43,8 @@ namespace Mustashe_ic
    
         }
 
-        //made a random number generator
+
+
         private int num_Generator(int min_val, int max_val)
         {
 
@@ -46,16 +53,38 @@ namespace Mustashe_ic
             return num;
         }
 
-        //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
+
+      //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
+       
+
         public void tileImage(int image_num)
         {
-          
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gameMain));
+            this.imageList_animals = new System.Windows.Forms.ImageList(this.components);
 
-           alive_imageList = new System.Windows.Forms.ImageList();
+            imageList_animals = new System.Windows.Forms.ImageList(this.components);
+            this.imageList_animals.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList_animals.ImageStream")));
+            this.imageList_animals.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList_animals.Images.SetKeyName(0, "bird.jpg");
+            this.imageList_animals.Images.SetKeyName(1, "cat.jpg");
+            this.imageList_animals.Images.SetKeyName(2, "chicken.jpg");
+            this.imageList_animals.Images.SetKeyName(3, "dog.jpg");
+            this.imageList_animals.Images.SetKeyName(4, "crab.jpg");
+            this.imageList_animals.Images.SetKeyName(5, "goldfish.jpg");
+            this.imageList_animals.Images.SetKeyName(6, "t_rex.jpg");
+            this.imageList_animals.Images.SetKeyName(7, "bronc.jpg");
+            this.imageList_animals.Images.SetKeyName(8, "steg.jpg");
+            this.imageList_animals.Images.SetKeyName(9, "jellyfish.jpg");
+            this.imageList_animals.Images.SetKeyName(10, "pig.jpg");
+            this.imageList_animals.Images.SetKeyName(11, "sheep.jpg");
+
+
+           /*alive_imageList = new System.Windows.Forms.ImageList();
            alive_imageList.ImageSize = new Size(100, 100); //makes the images same size as button
-
            dead_imageList = new System.Windows.Forms.ImageList();
            dead_imageList.ImageSize = new Size(100, 100);//makes the images same size as button
+
 
             //Imagelist with normal pics
             //need to move these to a global variable
@@ -108,21 +137,28 @@ namespace Mustashe_ic
             dead_imageList.Images.Add(
             Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\sheep_moustache.jpg"));
             dead_imageList.Images.Add(
-            Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\pig_moustache.jpg"));
+            Image.FromFile("C:\\Users\\Russ\\Documents\\GitHub\\Mustache-ic\\images\\pig_moustache.jpg"));*/
+
 
             //if image is normal
             if (image_num == 1)
             {
-                this.tile.Image = alive_imageList.Images[num_Generator(0, 11)];
+                //his.tile.Image = alive_imageList.Images[num_Generator(0, 11)];
+                this.tile.Image = imageList_animals.Images[num_Generator(0, 11)];
                
             }
             //if image has moustache
             else
-            {
-                this.tile.Image = dead_imageList.Images[num_Generator(0, 11)];
+        {
+                //this.tile.Image = dead_imageList.Images[num_Generator(0, 11)];
                 System.Threading.Thread.Sleep(1000); //keeps the image up, may have to adjust time
+
             }
-            
+
+
+          
+           
+
             
         }
 
@@ -134,18 +170,14 @@ namespace Mustashe_ic
 
         private void tile_clicked(object sender, EventArgs e)
         {
-
             if(this.correctObject == true)
             {
-                tileImage(0); 
-                
-
-                //increment score
-                
+                //Code to add mustache to button picture
+                //Add to score
             }
             else
             {
-                tileImage(1);
+                //Code to remove points from score
                 //Remove lives
             }
 

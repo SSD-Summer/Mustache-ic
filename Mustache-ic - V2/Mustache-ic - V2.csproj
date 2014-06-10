@@ -51,6 +51,7 @@
       <DependentUpon>gameMain.cs</DependentUpon>
     </Compile>
     <Compile Include="gamePlay.cs" />
+    <Compile Include="global.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tileClass.cs" />

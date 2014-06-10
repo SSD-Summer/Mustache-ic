@@ -8,32 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using System.Timers;
 
 namespace Mustashe_ic
 {
     public partial class gameMain : Form
     {
-
+        //Controls for game menu
         System.Windows.Forms.Button button_worldsMode;
         System.Windows.Forms.Button button_endlessMode;
         System.Windows.Forms.Button button_world1;
+       
+        //Label associated with the count down before a game start
+        System.Windows.Forms.Label label_countDown;
+        
+        //Controls associated with the results page shown after a completed game
         System.Windows.Forms.Panel panel_results;
+        System.Windows.Forms.Label label_win_lose;
+        System.Windows.Forms.Label label_score;
+        System.Windows.Forms.Button button_return;
+        System.Windows.Forms.Button button_continue;
 
+        //Timers for game length and countDown label 
         System.Windows.Forms.Timer game_timer;
         System.Windows.Forms.Timer labelTimer;
-        System.Windows.Forms.Label countDown;
-        private string ready = "Ready";
-        private string set = "Set";
-        private string go = "GO!";
+        public int count;
         private int score = 0;
-        
+
         gamePlay game;
         public gameMain()
         {
             InitializeComponent();
             //gamePlay game = new gamePlay(this, 4, 1);
-            
+
 
         }
 
@@ -41,9 +47,19 @@ namespace Mustashe_ic
         {
 
             //On Start click - Hide everything currently active on the form
-            button_start.Hide();
-            button_leaderboard.Hide();
-            gameMain.ActiveForm.BackgroundImage = null;
+            if ((Button)sender == button_start)
+            {
+                button_start.Hide();
+                button_leaderboard.Hide();
+
+                gameMain.ActiveForm.BackgroundImage = null;
+            }
+            if((Button)sender == button_return)
+            {
+                panel_results.Hide();
+                button_return.Hide();
+                button_continue.Hide();
+            }
             
             //Start mode button drawing
             button_worldsMode = new Button();
@@ -77,10 +93,9 @@ namespace Mustashe_ic
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
             //button_world1.Click += new System.EventHandler(world_startGame);
             button_world1.Click += new System.EventHandler(level_countdown);
-            
             this.Controls.Add(button_world1);
         }
-        bool countdown_done = false;
+       
         /// <summary>
         /// begins "ready, set, go" message. then moves to world_startGame
         /// </summary>
@@ -89,37 +104,29 @@ namespace Mustashe_ic
         private void level_countdown(object sender, EventArgs e)
         {
             button_world1.Hide();
-            //countDown.AutoSize = true;
-            //countDown.BackColor = System.Drawing.Color.Transparent;
-            //countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold);
-            //countDown.Location = new System.Drawing.Point(235, 259);
-            //countDown.Name = "label_countDown";
-            //countDown.Size = new System.Drawing.Size(208, 84);
-            //countDown.Text = "Ready";
-            //this.Controls.Add(countDown);
-            countDown.Visible = true;
-            countDown.Text = ready;
+            label_countDown = new Label();
+            label_countDown.AutoSize = true;
+            label_countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label_countDown.ForeColor = Color.Red;
+            label_countDown.Text = "Ready";
+            label_countDown.Location = new Point(300, 300);
+            this.Controls.Add(label_countDown);
 
+            count = 1;
             labelTimer = new Timer();
             labelTimer.Tick += new EventHandler(labelTimer_tick);
             labelTimer.Disposed += new EventHandler(world_startGame);
-            labelTimer.Interval = 2000;
+            labelTimer.Interval = 1000;
             labelTimer.Enabled = true;
 
-            if (countdown_done == true) //doesn't get to this
-            {
-                countDown.Visible = false;
-                //labelTimer. += new EventHandler(world_startGame); //is there a way to create an event with the timer?
-            }
         }
 
         /// <summary>
         /// timer for the "ready set go" message before level starts. 
         /// </summary>
-        private static int count = 1;
+        
         private void labelTimer_tick(object sender, EventArgs e)
         {
-
             if (count > 3)
             {
                 labelTimer.Dispose();
@@ -128,38 +135,30 @@ namespace Mustashe_ic
             switch (count)
             {
                 case 1:
-                    this.countDown.Text = set;
+                    this.label_countDown.Text = "Set...";
                     break;
                 case 2:
-                    this.countDown.Text = go;
+                    this.label_countDown.Text = "Go!";
                     break;
                 default:
                     //labelTimer.Enabled = false;
-                    countdown_done = true;
                     break;
             }
             count++;
 
-            
-
         }
-
        
         private void world_startGame(object sender, EventArgs e)
         {
 
-
+            label_countDown.Visible = false;
             game = new gamePlay(this, 3, 1);
 
             game_timer = new System.Windows.Forms.Timer();
             game_timer.Tick += new EventHandler(timer_Tick);
+            game_timer.Disposed += new EventHandler(results);
             game_timer.Interval = 1000;
             game_timer.Start();
-
-            if (game.timer == 0)
-            {
-               
-            }
 
         }
 
@@ -167,37 +166,92 @@ namespace Mustashe_ic
         {
             if(game.timer <= 1)
             {
-                game_timer.Stop();
+                game_timer.Dispose();
+                //game_timer.Stop();
                 //Code for once a single round of gameplay is finished
             }
 
             game.gameTick();
         }
 
+        /// <summary>
+        /// Shows the player's score, whether they win/lose, and the top 10 on the leaderboard for the current level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void results(object sender, EventArgs e)
         {
-            int passingScore = 1000;
+            game.hideGameControls();
+           //Creates a panel for results of the game to show
             panel_results = new Panel();
             panel_results.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_results.Location = new System.Drawing.Point(0, 0);
             panel_results.Size = new System.Drawing.Size(698, 715);
-            panel_results.TabIndex = 4;
+            panel_results.Visible = true;
+            panel_results.BackColor = Color.AntiqueWhite;
+
+            //Creates a label for player's final score
+            label_score = new Label();
+            label_score.AutoSize = true;
+            label_score.BackColor = System.Drawing.Color.Transparent;
+            label_score.Text = "Score: ";
+            label_score.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label_score.Location = new System.Drawing.Point(66, 114);
+            label_score.Name = "label_score";
+            label_score.Visible = true;
+  
+
+            //Indicates whether the player reached the needed score to move on 
+            label_win_lose = new Label();
+            label_win_lose.AutoSize = true;
+            label_win_lose.BackColor = System.Drawing.Color.Transparent;
+            label_win_lose.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label_win_lose.ForeColor = System.Drawing.Color.Red;
+            label_win_lose.Location = new System.Drawing.Point(196, 259);
+            label_win_lose.Name = "label_win_lose";
+            this.label_win_lose.Size = new System.Drawing.Size(286, 84);
+            label_win_lose.Text = "You Win!";
+            label_win_lose.Visible = true;
+
+            button_return = new Button();
+            button_return.AutoSize = true;
+            button_return.Size = new System.Drawing.Size(200, 100);
+            button_return.Location = new Point(100, 400);
+            button_return.Text = "Return";
+            button_return.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
+            button_return.Click += new EventHandler(button_start_Click);
+
+            button_continue = new Button();
+            button_continue.AutoSize = true;
+            button_continue.Size = new System.Drawing.Size(200, 100);
+            button_continue.Location = new Point(400, 400);
+            button_continue.Text = "Continue";
+            button_continue.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
+
+            panel_results.Controls.Add(button_return);
+            panel_results.Controls.Add(button_continue);
+            panel_results.Controls.Add(label_score);
+            panel_results.Controls.Add(label_win_lose);
             this.Controls.Add(panel_results);
+            label_win_lose.Show();
+            label_score.Show();
 
-            System.Windows.Forms.Label label_score = new Label();
-            System.Windows.Forms.Label label_win_lose = new Label();
-
+            this.panel_results.BringToFront();
+            
+            //Depending on the player's score, it will say either they won or lost.
+            int passingScore = 1000;
             if (score >= passingScore)
             {
-                label_win_lose.Name = "You Win!"; 
+                label_win_lose.Text = "You Win!"; 
             }
             else
             {
-                label_win_lose.Name = "You Lose!";
+                label_win_lose.Text = "You Lose!";
             }
         }
 
 
 
     }
+    
 }
