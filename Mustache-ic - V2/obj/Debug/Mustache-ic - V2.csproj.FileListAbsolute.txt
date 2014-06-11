@@ -24,3 +24,4 @@ C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache_i
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.csproj.GenerateResource.Cache
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.exe
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.pdb
+C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.csprojResolveAssemblyReference.cache

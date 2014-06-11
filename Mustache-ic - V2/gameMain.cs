@@ -33,6 +33,7 @@ namespace Mustashe_ic
         System.Windows.Forms.Timer labelTimer;
         public int count;
         private int score = 0;
+        
 
         gamePlay game;
         public gameMain()

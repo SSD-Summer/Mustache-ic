@@ -17,6 +17,7 @@ namespace Mustashe_ic
         tileClass[,] board;
         int n; //Defines the board as an N by N 
         public static int score;
+        public static int lives;
         public int timer { set; get; } //Probably will change to helper class
         int count; //This is the variable used to keep track of how often to hide a tile 
         int hide_speed;//randX, randY; //ints used as random vars        
@@ -100,7 +101,7 @@ namespace Mustashe_ic
                     board[i, j].tile.Location = new System.Drawing.Point(i * 125 + 5, j * 100 + 5);
                     //
                     //sets each tile to image from the the imageList
-                    board[i, j].tileImage(1);
+                    board[i, j].tileImage();
 ;                    
                     
                     //board[i, j].tile.Click += new EventHandler(tile_clicked);
