@@ -118,7 +118,8 @@ namespace Mustashe_ic
         }
 
         /// <summary>
-        /// One "Turn" of the game. Decrements the count variable. If there are 2 or more hidden tiles, un-hide one. If count is '0' then hide a random tile then generate a new counter.
+        /// One "Turn" of the game. Decrements the count variable. If there are 2 or more hidden tiles, un-hide one. 
+        /// If count is '0' then hide a random tile then generate a new counter.
         /// </summary>
         public void gameTick() //Ran each sec for the alloted time 
         {
@@ -148,6 +149,9 @@ namespace Mustashe_ic
             label_timer.Text = timer.ToString();
         }
 
+        /// <summary>
+        /// Hides the game controllers.
+        /// </summary>
         public void hideGameControls()
         {
             panel_tile_holder.Hide();

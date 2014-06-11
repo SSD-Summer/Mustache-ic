@@ -45,6 +45,12 @@ namespace Mustashe_ic
 
         }
 
+        /// <summary>
+        /// When the start button is hit, it creates the next page that 
+        /// allows the player to choose which game mode they want to play.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_start_Click(object sender, EventArgs e)
         {
 
@@ -63,7 +69,7 @@ namespace Mustashe_ic
                 button_continue.Hide();
             }
             
-            //Start mode button drawing
+            //Creates world mode button 
             button_worldsMode = new Button();
             button_worldsMode.Text = "Worlds";
             button_worldsMode.Size = new Size(250, 390);
@@ -73,7 +79,7 @@ namespace Mustashe_ic
             button_worldsMode.Click += new System.EventHandler(worldButton_Click); //Bind button click event to worldButton_click function
             this.Controls.Add(button_worldsMode);
 
-
+            //Creates endless mode button
             button_endlessMode = new Button();
             button_endlessMode.Text = "Endless";
             button_endlessMode.Size = new Size(250, 390);
@@ -83,6 +89,12 @@ namespace Mustashe_ic
             this.Controls.Add(button_endlessMode);            
         }
 
+        /// <summary>
+        /// When worlds mode has been selected, it moves to the next page for
+        /// the player to choose which world.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void worldButton_Click(object sender, EventArgs e) //Loads world selection buttons 
         {
             button_worldsMode.Hide();
@@ -93,13 +105,12 @@ namespace Mustashe_ic
             button_world1.AutoSize = true;
             button_world1.Location = new Point(20, 20);
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
-            //button_world1.Click += new System.EventHandler(world_startGame);
             button_world1.Click += new System.EventHandler(level_countdown);
             this.Controls.Add(button_world1);
         }
        
         /// <summary>
-        /// begins "ready, set, go" message. then moves to world_startGame
+        /// Begins "Ready, Set..., GO!" message. then moves to world_startGame.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -124,11 +135,12 @@ namespace Mustashe_ic
         }
 
         /// <summary>
-        /// timer for the "ready set go" message before level starts. 
+        /// Timer for the "Ready, Set..., GO!" message before level starts. 
         /// </summary>
         
         private void labelTimer_tick(object sender, EventArgs e)
         {
+            
             if (count > 3)
             {
                 labelTimer.Dispose();
@@ -143,13 +155,17 @@ namespace Mustashe_ic
                     this.label_countDown.Text = "Go!";
                     break;
                 default:
-                    //labelTimer.Enabled = false;
                     break;
             }
             count++;
 
         }
        
+        /// <summary>
+        /// Creates the buttons for the chosen level and initializes the timer for the level.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void world_startGame(object sender, EventArgs e)
         {
 
@@ -164,6 +180,11 @@ namespace Mustashe_ic
 
         }
 
+        /// <summary>
+        /// Timer for the levels. Once the level ends, it'll move to the results page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
             if(game.timer <= 1)
@@ -177,13 +198,14 @@ namespace Mustashe_ic
         }
 
         /// <summary>
-        /// Shows the player's score, whether they win/lose, and the top 10 on the leaderboard for the current level
+        /// Shows the player's score, whether they win/lose, and the top 10 on the leaderboard for the current level.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void results(object sender, EventArgs e)
         {
             game.hideGameControls();
+
            //Creates a panel for results of the game to show
             panel_results = new Panel();
             panel_results.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -215,6 +237,7 @@ namespace Mustashe_ic
             label_win_lose.Text = "You Win!";
             label_win_lose.Visible = true;
 
+            //Creates a button for the player to return the game modes page
             button_return = new Button();
             button_return.AutoSize = true;
             button_return.Size = new System.Drawing.Size(200, 100);
@@ -223,6 +246,7 @@ namespace Mustashe_ic
             button_return.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
             button_return.Click += new EventHandler(button_start_Click);
 
+            //Creates a button for the player to move onto the next levels
             button_continue = new Button();
             button_continue.AutoSize = true;
             button_continue.Size = new System.Drawing.Size(200, 100);
@@ -240,7 +264,7 @@ namespace Mustashe_ic
 
             this.panel_results.BringToFront();
             
-            //Depending on the player's score, it will say either they won or lost.
+            //Depending on the player's score, it will say either they won or lost
             int passingScore = 1000;
             if (score >= passingScore)
             {

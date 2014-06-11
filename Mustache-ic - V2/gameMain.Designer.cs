@@ -41,7 +41,7 @@
             // button_start
             // 
             this.button_start.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_start.Location = new System.Drawing.Point(177, 196);
+            this.button_start.Location = new System.Drawing.Point(177, 178);
             this.button_start.Margin = new System.Windows.Forms.Padding(4);
             this.button_start.Name = "button_start";
             this.button_start.Size = new System.Drawing.Size(328, 143);
@@ -53,10 +53,10 @@
             // button_leaderboard
             // 
             this.button_leaderboard.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_leaderboard.Location = new System.Drawing.Point(120, 379);
+            this.button_leaderboard.Location = new System.Drawing.Point(177, 353);
             this.button_leaderboard.Margin = new System.Windows.Forms.Padding(4);
             this.button_leaderboard.Name = "button_leaderboard";
-            this.button_leaderboard.Size = new System.Drawing.Size(448, 108);
+            this.button_leaderboard.Size = new System.Drawing.Size(328, 93);
             this.button_leaderboard.TabIndex = 2;
             this.button_leaderboard.Text = "Leaderboards";
             this.button_leaderboard.UseVisualStyleBackColor = true;
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Mustache_ic___V2.Properties.Resources.title;
-            this.ClientSize = new System.Drawing.Size(699, 719);
+            this.ClientSize = new System.Drawing.Size(697, 719);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
             this.Location = new System.Drawing.Point(200, 200);
