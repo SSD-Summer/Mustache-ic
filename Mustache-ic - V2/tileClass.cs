@@ -103,8 +103,16 @@ namespace Mustashe_ic
             //if image is normal
             if (image_num == 1)
             {
-                //his.tile.Image = alive_imageList.Images[num_Generator(0, 11)];
-                this.tile.Image = alive_imageList.Images[num_Generator(0, 11)];
+                int a = num_Generator(0, 11);
+                this.tile.Image = alive_imageList.Images[a];
+                if(a == 5 || a == 10 || a == 11)
+                {
+                    this.tile.Tag = 1; //sets the tag to the dino images to 1
+                }
+                else
+                {
+                    this.tile.Tag = 0;
+                }
                
             }
             //if image has moustache
@@ -123,10 +131,36 @@ namespace Mustashe_ic
             this.tile.Hide();
         }
 
-        private void tile_clicked(object sender, EventArgs e)
+        /// <summary>
+        /// When image tile is clicked, scores points, SIMPLE NEEDS WORK
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        public void tile_clicked(object sender, EventArgs e)
         {
+            //simple scoring-- need to make it image specific
+            gamePlay.score = gamePlay.score + 200;
+            gamePlay.label_score.Text = gamePlay.score.ToString();
+            /*string a;
+            a = this.tile.Tag.ToString();
+
+                        label_timer.Text = timer.ToString();
+            if( a == "5" || a == "10" || a == "11")
+            {
+                switch (switch_on)
+                {
+                    case a == 5:
+                        this.tile.
+
+                    default:
+                }
+                
+            }
+            
             if(this.correctObject == true)
             {
+                
                 //Code to add mustache to button picture
                 //Add to score
             }
@@ -134,7 +168,7 @@ namespace Mustashe_ic
             {
                 //Code to remove points from score
                 //Remove lives
-            }
+            }*/
 
             //code to fade in and fade out picture and change picture
         }

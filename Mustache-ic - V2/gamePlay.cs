@@ -16,7 +16,7 @@ namespace Mustashe_ic
     {
         tileClass[,] board;
         int n; //Defines the board as an N by N 
-        int score;
+        public static int score;
         public int timer { set; get; } //Probably will change to helper class
         int count; //This is the variable used to keep track of how often to hide a tile 
         int hide_speed;//randX, randY; //ints used as random vars        
@@ -24,10 +24,9 @@ namespace Mustashe_ic
         Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
        
         
-        //System.Windows.Forms.ImageList imageList;
-
-        public System.Windows.Forms.Label label_lives, label_timer, label_score;
+        public static System.Windows.Forms.Label label_lives, label_timer, label_score;
         public System.Windows.Forms.Panel panel_tile_holder;
+       
 
 
         /// <summary>
@@ -154,9 +153,20 @@ namespace Mustashe_ic
             label_timer.Hide();
         }
 
+        /*public void scorePoints()
+        {
+            score = +200;
+            label_score.Text = score.ToString();
+            
+            
+        }*/
+
         private void tile_clicked(object sender, EventArgs e)
         {
             
+
+           
         }
-    }
+
+       }
 }

@@ -18,8 +18,7 @@ namespace Mustashe_ic
 
         static void Main()
         {
-            System.Windows.Forms.ImageList imageList;
-           
+                    
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new gameMain());
