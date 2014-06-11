@@ -1,33 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Drawing;
-using System.ComponentModel;
+
 namespace Mustashe_ic
 {
-   
-
     /// <summary>
     /// Holds all the form controls and game items for playing.
     /// </summary>
-    class gamePlay
+    internal class gamePlay
     {
         tileClass[,] board;
         int n; //Defines the board as an N by N 
         public static int score;
         public static int lives;
         public int timer { set; get; } //Probably will change to helper class
-        int count; //This is the variable used to keep track of how often to hide a tile 
-        int hide_speed;//randX, randY; //ints used as random vars        
-        Random rand; //Random generator - Will probably move 
-        Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
+
+        private int count; //This is the variable used to keep track of how often to hide a tile
+        private int hide_speed;//randX, randY; //ints used as random vars
+
+        //int image_num;//uses rand to select a random image number
+        //int num, min_val, max_val;//integers for random number generator
+        private Random rand; //Random generator - Will probably move
        
+        private Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
         
         public static System.Windows.Forms.Label label_lives, label_timer, label_score;
         public System.Windows.Forms.Panel panel_tile_holder;
-       
+
 
 
         /// <summary>
@@ -44,31 +43,35 @@ namespace Mustashe_ic
             
             //Lives label generation 
             label_lives = new System.Windows.Forms.Label();
-            label_lives.Text = "Number of lives";
-            label_lives.AutoSize = true;
-            label_lives.Location = new System.Drawing.Point(5, 5);
-            label_lives.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
+            label_lives.Text = "Lives";
+            //label_lives.AutoSize = true;
+            label_lives.Location = new System.Drawing.Point(1, 1);
+            label_lives.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
+            label_lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             //timer label generation
             label_timer = new System.Windows.Forms.Label();
             label_timer.Text = timer.ToString();
-            label_timer.Location = new System.Drawing.Point(230, 5);
+            label_timer.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
+            label_timer.Location = new System.Drawing.Point(g.Width/2, 1);
             label_timer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             //score label generation
             label_score = new System.Windows.Forms.Label();
             label_score.Text = score.ToString();
-            label_score.Location = new System.Drawing.Point(450, 5);
-            label_score.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right))); ;
+            label_score.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
+            label_score.Location = new System.Drawing.Point(650, 1);
+            label_score.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             //tile panel generation
             panel_tile_holder = new System.Windows.Forms.Panel();
-            panel_tile_holder.Size = new System.Drawing.Size(g.Size.Width, 250);
-            panel_tile_holder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Left)));
-            panel_tile_holder.AutoSize = true;
-            panel_tile_holder.Location = new System.Drawing.Point(0, 200);
+            panel_tile_holder.Size = new System.Drawing.Size(g.Width, g.Height);
+            panel_tile_holder.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Left));
+            //panel_tile_holder.AutoSize = true;
+            panel_tile_holder.Location = new System.Drawing.Point(0, 100);
+
+            g.Controls.Add(panel_tile_holder);
 
             g.Controls.Add(label_lives);
             g.Controls.Add(label_timer);
             g.Controls.Add(label_score);
-            g.Controls.Add(panel_tile_holder);
 
             init_board(n); //initializes the board
             hide_speed = 2;//How quickly tiles hide, 0 - 3 secs  
@@ -78,7 +81,7 @@ namespace Mustashe_ic
             
             
             
-                      
+
 
         }
         
@@ -89,16 +92,20 @@ namespace Mustashe_ic
         private void init_board(int size) //Creates a size X size grid of tiles 
         {
             board = new tileClass[size, size];
-            
-            
+            int xDim, yDim;
+            xDim = (gameMain.ActiveForm.Width/size) - 30;
+            yDim = (gameMain.ActiveForm.Height/size) - 44;
+
             for (int i = 0; i < size; ++i)
             {
                 for (int j = 0; j < size; ++j)    // This is where I print the gameboard into the panel 
                 {
-                    
+                    //715x790
                     board[i, j] = new tileClass();
-                    board[i, j].tile.Size = new System.Drawing.Size(100, 100);
-                    board[i, j].tile.Location = new System.Drawing.Point(i * 125 + 5, j * 100 + 5);
+                    board[i, j].tile.Size = new System.Drawing.Size(xDim,yDim);
+                    board[i, j].tile.BackColor = Color.Transparent;
+                    
+                    board[i, j].tile.Location = new System.Drawing.Point(i * (xDim - 3) + 60, j * (yDim+5) + 5);
                     //
                     //sets each tile to image from the the imageList
                     board[i, j].tileImage();
@@ -108,12 +115,8 @@ namespace Mustashe_ic
                     panel_tile_holder.Controls.Add(board[i, j].tile);
                 }
             }
-
         }
 
-        
-
-        
         /// <summary>
         /// One "Turn" of the game. Decrements the count variable. If there are 2 or more hidden tiles, un-hide one. If count is '0' then hide a random tile then generate a new counter.
         /// </summary>
@@ -132,7 +135,7 @@ namespace Mustashe_ic
             { 
                 //when the count is 0 its tile to hide a tile 
 
-                int aa = rand.Next(1,3); //Needs to be based on number of tiles on the board
+                int aa = rand.Next(1, 3); //Needs to be based on number of tiles on the board
                 for (int x = 0; x < aa; ++x)
                 {
                     int i = rand.Next(n);
@@ -143,7 +146,6 @@ namespace Mustashe_ic
                 }
             }
             label_timer.Text = timer.ToString();
-            
         }
 
         public void hideGameControls()
@@ -169,5 +171,5 @@ namespace Mustashe_ic
            
         }
 
-       }
+    }
 }

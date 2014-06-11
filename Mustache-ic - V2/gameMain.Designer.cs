@@ -68,12 +68,13 @@
             this.ClientSize = new System.Drawing.Size(699, 719);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
+            this.Location = new System.Drawing.Point(200, 200);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(715, 790);
             this.MinimumSize = new System.Drawing.Size(715, 726);
             this.Name = "gameMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "gameMain";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 

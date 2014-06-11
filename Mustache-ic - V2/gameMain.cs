@@ -154,7 +154,7 @@ namespace Mustashe_ic
         {
 
             label_countDown.Visible = false;
-            game = new gamePlay(this, 3, 1);
+            game = new gamePlay(this, 4, 1);
 
             game_timer = new System.Windows.Forms.Timer();
             game_timer.Tick += new EventHandler(timer_Tick);
