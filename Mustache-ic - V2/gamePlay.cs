@@ -19,10 +19,7 @@ namespace Mustashe_ic
         int score;
         public int timer { set; get; } //Probably will change to helper class
         int count; //This is the variable used to keep track of how often to hide a tile 
-        int hide_speed;//randX, randY; //ints used as random vars
-
-        //int image_num;//uses rand to select a random image number
-        //int num, min_val, max_val;//integers for random number generator
+        int hide_speed;//randX, randY; //ints used as random vars        
         Random rand; //Random generator - Will probably move 
         Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
        
@@ -78,20 +75,13 @@ namespace Mustashe_ic
             rand = new Random();  //needed for random generation
             count = rand.Next(hide_speed); //get random tile wait time
             hiddenList = new Queue<Tuple<int, int>>(); //initalizes queue to hold the hidden tiles
-            //imageList = new System.Windows.Forms.ImageList();
+            
             
             
                       
 
         }
-        //created this method for num generator, might be able to use for all generator numbers once overloaded
-        //private int num_Generator(int min_val, int max_val)
-        //{
-            
-        //   Random rand = new Random();
-        //   num = rand.Next(min_val, max_val);
-        //   return num;
-        //}
+        
         /// <summary>
         /// Initalizes the tile board onto panel_tile_holder
         /// </summary>
@@ -100,7 +90,7 @@ namespace Mustashe_ic
         {
             board = new tileClass[size, size];
             
-
+            
             for (int i = 0; i < size; ++i)
             {
                 for (int j = 0; j < size; ++j)    // This is where I print the gameboard into the panel 

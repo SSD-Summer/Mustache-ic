@@ -51,7 +51,6 @@
       <DependentUpon>gameMain.cs</DependentUpon>
     </Compile>
     <Compile Include="gamePlay.cs" />
-    <Compile Include="global.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tileClass.cs" />
@@ -89,6 +88,72 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bird_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bron_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bronc.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cat.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cat_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chicken.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chicken_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crab.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crab_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dog.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dog_moustashe.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goldfish.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\goldfish_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jellyfish.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jellyfish_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pig.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pig_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sheep.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sheep_moustache.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\steg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\steg_moustashe.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\t_rex.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\t_rex_moustashe.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
