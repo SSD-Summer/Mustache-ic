@@ -65,13 +65,12 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Mustache_ic___V2.Properties.Resources.title;
-            this.ClientSize = new System.Drawing.Size(697, 719);
+            this.ClientSize = new System.Drawing.Size(689, 719);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
-            this.Location = new System.Drawing.Point(200, 200);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(715, 790);
-            this.MinimumSize = new System.Drawing.Size(715, 726);
+            this.MinimumSize = new System.Drawing.Size(715, 790);
             this.Name = "gameMain";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

@@ -12,16 +12,27 @@ namespace Mustashe_ic
 
     class tileClass
     {
-
+        //Bool value whether or not the tile is the correct one. May need to be improved or changed
         public bool correctObject { get; set; }
+        //The button - may need to switch to image
         public System.Windows.Forms.Button tile { get; set; }
+        //Static image Lists to hold the images from the resouce file
         public static System.Windows.Forms.ImageList alive_imageList;
         public static System.Windows.Forms.ImageList dead_imageList;
+
+        //Used to return random numbers - need to remove
         private int num;
+
+        //timer will be used to control how long a correct or incorrect selection stays on the board
         private System.Timers.Timer timer;
 
 
-
+        /// <summary>
+        /// Default constructor. Sets: 
+        ///     correctObject=false
+        ///     Allocates a new button for tile
+        ///     assigns buttons event to tile_clicked
+        /// </summary>
         public tileClass()
         {
             correctObject = false;
@@ -30,11 +41,16 @@ namespace Mustashe_ic
 
         }
 
+        /// <summary>
+        /// Same as default except sets:
+        ///     correctObject = val
+        /// </summary>
+        /// <param name="val">Manualy sets if tile is the correct selection for that game.</param>
         public tileClass(bool val)
         {
             correctObject = val;
             tile = new System.Windows.Forms.Button();
-
+            tile.Click += new EventHandler(tile_clicked);
 
         }
 
@@ -52,11 +68,11 @@ namespace Mustashe_ic
             num = rand.Next(min_val, max_val);
             return num;
         }
+
         /// <summary>
         /// Creates two static ImageList. alive_imageList stores non-moustache images, dead_imageList stores
         /// moustache images. The images are sized to 90 x 90
         /// </summary>
-
         public static void imageList()
         {
             alive_imageList = new System.Windows.Forms.ImageList();
@@ -94,18 +110,26 @@ namespace Mustashe_ic
         }
 
 
-        //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
+       
         /// <summary>
         /// Sets the image on the tile. If image_num == 1, alive image; else dead image
         /// </summary>
-        /// <param name="image_num"></param>
-        public void tileImage()
+        /// <param name="x">Width of tile image is being attached too</param>
+        /// <param name="y">Height of tile image is being attached too</param>
+        public void tileImage(int x, int y)
         {
-
+            //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
 
             int a = num_Generator(0, 11);
+
+            //Adjusts images to current tile size
+            alive_imageList.ImageSize = new Size(x, y);
+            dead_imageList.ImageSize = new Size(x, y);
+
             this.tile.Image = alive_imageList.Images[a];
+
             this.tile.Show();
+
             if (a == 5)
             {
                 this.tile.Tag = 5;
@@ -122,12 +146,11 @@ namespace Mustashe_ic
             {
                 this.tile.Tag = 0;
             }
-
-
-
         }
 
-
+        /// <summary>
+        /// Hides button associated with tile
+        /// </summary>
         public void hideTile()
         {
             this.tile.Hide();
@@ -140,7 +163,6 @@ namespace Mustashe_ic
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         public void tile_clicked(object sender, EventArgs e)
         {
             //simple scoring-- need to make it image specific

@@ -25,6 +25,3 @@ C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-i
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.exe
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.pdb
 C:\Users\Russ\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.csprojResolveAssemblyReference.cache
-C:\Users\Awesome\Documents\GitHub\Mustache-ic\Mustache-ic - V2\bin\Debug\Mustache-ic - V2.exe.config
-C:\Users\Awesome\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.exe
-C:\Users\Awesome\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.pdb

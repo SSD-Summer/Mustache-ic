@@ -9,10 +9,13 @@ namespace Mustashe_ic
     /// </summary>
     internal class gamePlay
     {
-        tileClass[,] board;
+        tileClass[,] board; //2D array of tileClass used to display 
+        
         int n; //Defines the board as an N by N 
+
         public static int score;
         public static int lives;
+        
         public int timer { set; get; } //Probably will change to helper class
 
         private int count; //This is the variable used to keep track of how often to hide a tile
@@ -24,10 +27,12 @@ namespace Mustashe_ic
        
         private Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
         
+        //Controls used for displaying game info
         public static System.Windows.Forms.Label label_lives, label_timer, label_score;
         public System.Windows.Forms.Panel panel_tile_holder;
 
 
+        
 
         /// <summary>
         /// Initalizes an instance of the game
@@ -35,7 +40,7 @@ namespace Mustashe_ic
         /// <param name="g"> The form the game will be played on.</param>
         /// <param name="size">The number of tiles that the board will have. n x n </param>
         /// <param name="mode">Specifys the mode of play. World(world 1, 2, 3, ....) or Endless</param>
-        public gamePlay(gameMain g, int size, int mode)
+        public gamePlay(gameMain g, int size, int world, int sub_world)
         {
             score = 0; //beginning score to zero
             timer = 30; // Starting time 30 secs
@@ -44,21 +49,23 @@ namespace Mustashe_ic
             //Lives label generation 
             label_lives = new System.Windows.Forms.Label();
             label_lives.Text = "Lives";
-            //label_lives.AutoSize = true;
+            label_lives.TextAlign = ContentAlignment.TopLeft;
             label_lives.Location = new System.Drawing.Point(1, 1);
             label_lives.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
             label_lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             //timer label generation
             label_timer = new System.Windows.Forms.Label();
             label_timer.Text = timer.ToString();
+            label_timer.TextAlign = ContentAlignment.TopCenter;
             label_timer.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
-            label_timer.Location = new System.Drawing.Point(g.Width/2, 1);
+            label_timer.Location = new System.Drawing.Point(g.Width/2 - label_timer.Width, 1);
             label_timer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             //score label generation
             label_score = new System.Windows.Forms.Label();
             label_score.Text = score.ToString();
+            label_score.TextAlign = ContentAlignment.TopRight;
             label_score.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
-            label_score.Location = new System.Drawing.Point(650, 1);
+            label_score.Location = new System.Drawing.Point(g.Width-label_score.Width-10, 1);
             label_score.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             //tile panel generation
             panel_tile_holder = new System.Windows.Forms.Panel();
@@ -67,8 +74,8 @@ namespace Mustashe_ic
             //panel_tile_holder.AutoSize = true;
             panel_tile_holder.Location = new System.Drawing.Point(0, 100);
 
-            g.Controls.Add(panel_tile_holder);
 
+            g.Controls.Add(panel_tile_holder);
             g.Controls.Add(label_lives);
             g.Controls.Add(label_timer);
             g.Controls.Add(label_score);
@@ -78,11 +85,6 @@ namespace Mustashe_ic
             rand = new Random();  //needed for random generation
             count = rand.Next(hide_speed); //get random tile wait time
             hiddenList = new Queue<Tuple<int, int>>(); //initalizes queue to hold the hidden tiles
-            
-            
-            
-
-
         }
         
         /// <summary>
@@ -92,15 +94,18 @@ namespace Mustashe_ic
         private void init_board(int size) //Creates a size X size grid of tiles 
         {
             board = new tileClass[size, size];
+            //xDim and yDim will be the size of the tiles in relation to the form size
             int xDim, yDim;
-            xDim = (gameMain.ActiveForm.Width/size) - 30;
-            yDim = (gameMain.ActiveForm.Height/size) - 44;
+            
+            //I subtract 30 and 44 to add some spacing inbetween the tiles. Need to figure out ratio so that it can auto scale based on the number of tiles.
+            xDim = (gameMain.ActiveForm.Width/size) - 30; 
+            yDim = (gameMain.ActiveForm.Height/size) - 44; 
 
             for (int i = 0; i < size; ++i)
             {
                 for (int j = 0; j < size; ++j)    // This is where I print the gameboard into the panel 
                 {
-                    //715x790
+                    //715x790 - current size of form 6-12-14
                     board[i, j] = new tileClass();
                     board[i, j].tile.Size = new System.Drawing.Size(xDim,yDim);
                     board[i, j].tile.BackColor = Color.Transparent;
@@ -108,7 +113,7 @@ namespace Mustashe_ic
                     board[i, j].tile.Location = new System.Drawing.Point(i * (xDim - 3) + 60, j * (yDim+5) + 5);
                     //
                     //sets each tile to image from the the imageList
-                    board[i, j].tileImage();
+                    board[i, j].tileImage(xDim,yDim);
 ;                    
                     
                     //board[i, j].tile.Click += new EventHandler(tile_clicked);
@@ -136,7 +141,7 @@ namespace Mustashe_ic
             { 
                 //when the count is 0 its tile to hide a tile 
 
-                int aa = rand.Next(1, 3); //Needs to be based on number of tiles on the board
+                int aa = rand.Next(1, n); //Needs to be based on number of tiles on the board
                 for (int x = 0; x < aa; ++x)
                 {
                     int i = rand.Next(n);
@@ -167,7 +172,11 @@ namespace Mustashe_ic
             
             
         }*/
-
+        /// <summary>
+        /// Doesn't work yet. Just a holder till we finalize the logic
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tile_clicked(object sender, EventArgs e)
         {
             

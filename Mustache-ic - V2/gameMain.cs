@@ -8,6 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+
+
+/*Dominic Cox
+ * Russell Ballengee
+ * Jamie Wimsatt
+ */
+
 
 namespace Mustashe_ic
 {
@@ -29,13 +37,17 @@ namespace Mustashe_ic
         System.Windows.Forms.Button button_continue;
 
         //Timers for game length and countDown label 
-        System.Windows.Forms.Timer game_timer;
-        System.Windows.Forms.Timer labelTimer;
+        System.Windows.Forms.Timer timer_game;
+        System.Windows.Forms.Timer timer_countDownLabel;
         public int count;
         private int score = 0;
         
-
         gamePlay game;
+
+        /// <summary>
+        /// Default constructor for gameMain form
+        /// Initializes default controls and imageList for tileClass
+        /// </summary>
         public gameMain()
         {
             InitializeComponent();
@@ -86,6 +98,7 @@ namespace Mustashe_ic
             button_endlessMode.AutoSize = true;
             button_endlessMode.Location = new Point(375, 144);
             button_endlessMode.Anchor = ((AnchorStyles)(AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom));
+            //Needs event
             this.Controls.Add(button_endlessMode);            
         }
 
@@ -117,33 +130,39 @@ namespace Mustashe_ic
         private void level_countdown(object sender, EventArgs e)
         {
             button_world1.Hide();
+            //Count Down label creation
             label_countDown = new Label();
             label_countDown.AutoSize = true;
             label_countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            label_countDown.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right));
             label_countDown.ForeColor = Color.Red;
             label_countDown.Text = "Ready";
-            label_countDown.Location = new Point(300, 300);
+            //Sets location to center of form in realtion to the size of the label
+            //Need to adjust the location everytime its updated or fix the label size to largest string and center text within label
+            label_countDown.Location = new Point(gameMain.ActiveForm.Width / 2 - (label_countDown.Width), gameMain.ActiveForm.Height / 2 - (label_countDown.Height));
+            
+            //Add label to form
             this.Controls.Add(label_countDown);
 
+            //Timer setup for countdown label
             count = 1;
-            labelTimer = new Timer();
-            labelTimer.Tick += new EventHandler(labelTimer_tick);
-            labelTimer.Disposed += new EventHandler(world_startGame);
-            labelTimer.Interval = 1000;
-            labelTimer.Enabled = true;
+            timer_countDownLabel = new System.Windows.Forms.Timer();
+            timer_countDownLabel.Tick += new EventHandler(labelTimer_tick);
+            timer_countDownLabel.Disposed += new EventHandler(world_startGame);
+            timer_countDownLabel.Interval = 1000;
+            timer_countDownLabel.Enabled = true;
 
         }
 
         /// <summary>
         /// Timer for the "Ready, Set..., GO!" message before level starts. 
         /// </summary>
-        
         private void labelTimer_tick(object sender, EventArgs e)
         {
-            
-            if (count > 3)
+
+            if (count >= 3)
             {
-                labelTimer.Dispose();
+                timer_countDownLabel.Dispose();
             }
 
             switch (count)
@@ -170,28 +189,26 @@ namespace Mustashe_ic
         {
 
             label_countDown.Visible = false;
-            game = new gamePlay(this, 4, 1);
+            game = new gamePlay(this, 4, 1, 1); //For testing using a 4x4 grid, 1 and 1 are passed to simulate world 1 level 1
 
-            game_timer = new System.Windows.Forms.Timer();
-            game_timer.Tick += new EventHandler(timer_Tick);
-            game_timer.Disposed += new EventHandler(results);
-            game_timer.Interval = 1000;
-            game_timer.Start();
+            timer_game = new System.Windows.Forms.Timer();
+            timer_game.Tick += new EventHandler(timer_Tick);
+            timer_game.Disposed += new EventHandler(results);
+            timer_game.Interval = 1000;
+            timer_game.Start();
 
         }
 
         /// <summary>
         /// Timer for the levels. Once the level ends, it'll move to the results page.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">This would be the control that called this event</param>
         /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
             if(game.timer <= 1)
             {
-                game_timer.Dispose();
-                //game_timer.Stop();
-                //Code for once a single round of gameplay is finished
+                timer_game.Dispose();
             }
 
             game.gameTick();
@@ -200,7 +217,7 @@ namespace Mustashe_ic
         /// <summary>
         /// Shows the player's score, whether they win/lose, and the top 10 on the leaderboard for the current level.
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender">Reference to method that calls this event</param>
         /// <param name="e"></param>
         private void results(object sender, EventArgs e)
         {
@@ -254,10 +271,13 @@ namespace Mustashe_ic
             button_continue.Text = "Continue";
             button_continue.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
 
+            //Add all created controls to panel
             panel_results.Controls.Add(button_return);
             panel_results.Controls.Add(button_continue);
             panel_results.Controls.Add(label_score);
             panel_results.Controls.Add(label_win_lose);
+
+            //Add Panel to form
             this.Controls.Add(panel_results);
             label_win_lose.Show();
             label_score.Show();
@@ -275,9 +295,6 @@ namespace Mustashe_ic
                 label_win_lose.Text = "You Lose!";
             }
         }
-
-
-
     }
     
 }
