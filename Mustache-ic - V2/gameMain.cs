@@ -59,8 +59,7 @@ namespace Mustashe_ic
             {
                 button_start.Hide();
                 button_leaderboard.Hide();
-
-                gameMain.ActiveForm.BackgroundImage = null;
+               
             }
             if((Button)sender == button_return)
             {
@@ -68,6 +67,9 @@ namespace Mustashe_ic
                 button_return.Hide();
                 button_continue.Hide();
             }
+
+            gameMain.ActiveForm.BackgroundImage = Mustache_ic___V2.Properties.Resources.moustache_bg;
+            gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
             
             //Creates world mode button 
             button_worldsMode = new Button();
@@ -99,6 +101,8 @@ namespace Mustashe_ic
         {
             button_worldsMode.Hide();
             button_endlessMode.Hide();
+            gameMain.ActiveForm.BackgroundImage = Mustache_ic___V2.Properties.Resources.bg1;
+            gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
             button_world1 = new Button();
             button_world1.Text = "World 1";
             button_world1.Size = new Size(250, 195);
@@ -117,6 +121,7 @@ namespace Mustashe_ic
         private void level_countdown(object sender, EventArgs e)
         {
             button_world1.Hide();
+            gameMain.ActiveForm.BackgroundImage = null;
             label_countDown = new Label();
             label_countDown.AutoSize = true;
             label_countDown.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
