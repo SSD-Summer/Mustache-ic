@@ -12,7 +12,7 @@ namespace Mustashe_ic
         tileClass[,] board;
         int n; //Defines the board as an N by N 
         public static int score;
-        public static int lives;
+        public static int lives = 3;
         public int timer { set; get; } //Probably will change to helper class
 
         private int count; //This is the variable used to keep track of how often to hide a tile
@@ -24,7 +24,7 @@ namespace Mustashe_ic
        
         private Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
         
-        public static System.Windows.Forms.Label label_lives, label_timer, label_score;
+        public static System.Windows.Forms.Label label_lives, label_timer, label_score, label_actual_lives;
         public System.Windows.Forms.Panel panel_tile_holder;
 
 
@@ -43,11 +43,18 @@ namespace Mustashe_ic
             
             //Lives label generation 
             label_lives = new System.Windows.Forms.Label();
-            label_lives.Text = "Lives";
+            label_lives.Text = "Lives  " + lives;
             //label_lives.AutoSize = true;
             label_lives.Location = new System.Drawing.Point(1, 1);
             label_lives.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
             label_lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
+            //Actual Number of Lives
+            /*label_actual_lives = new System.Windows.Forms.Label();
+            label_actual_lives.Text = lives.ToString();
+            //label_lives.AutoSize = true;
+            label_actual_lives.Location = new System.Drawing.Point(100, 1);
+            label_actual_lives.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
+            label_actual_lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));*/
             //timer label generation
             label_timer = new System.Windows.Forms.Label();
             label_timer.Text = timer.ToString();

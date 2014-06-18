@@ -18,7 +18,7 @@ namespace Mustashe_ic
         public static System.Windows.Forms.ImageList alive_imageList;
         public static System.Windows.Forms.ImageList dead_imageList;
         private int num;
-        private System.Timers.Timer timer;
+        static System.Timers.Timer timer = new System.Timers.Timer();
 
 
 
@@ -133,6 +133,12 @@ namespace Mustashe_ic
             this.tile.Hide();
         }
 
+       /* public async Task imageTimer()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(30));
+            return Task;
+        }*/
+
 
 
         /// <summary>
@@ -143,77 +149,64 @@ namespace Mustashe_ic
 
         public void tile_clicked(object sender, EventArgs e)
         {
-            //simple scoring-- need to make it image specific
+            //simple scoring-- need to make it image specific          
+            int a = int.Parse(this.tile.Tag.ToString());
 
-
-            timer = new System.Timers.Timer(2000);
-            string a;
-            a = this.tile.Tag.ToString();
-
-            if (a == "5")
+            switch (a)
             {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[5];
+                case 5:
+                    {
+                        gamePlay.score = gamePlay.score + 200;
+                        gamePlay.label_score.Text = gamePlay.score.ToString();
+                        this.tile.Image = dead_imageList.Images[5];
+                        //timer.Interval = 5000;
+                       // timer.Start();
+                        
+                        //this.tileImage();
+                        break;
+                    }
+                case 10:
+                    {
+                        gamePlay.score = gamePlay.score + 200;
+                        gamePlay.label_score.Text = gamePlay.score.ToString();
+                        this.tile.Image = dead_imageList.Images[10];
+                        //timer.Interval = 5000;
+                        //timer.Start();
 
-                //NEED TO FIGURE OUT TIMERS
-                /*timer.Enabled = true;
-                 this.tile.Hide();
-                 tileImage();*/
+                        //this.tileImage();
 
+                        break;
+                    }
+                case 11:
+                    {
+                        gamePlay.score = gamePlay.score + 200;
+                        gamePlay.label_score.Text = gamePlay.score.ToString();
+                        this.tile.Image = dead_imageList.Images[11];
+                        //timer.Interval = 5000;
+                        //timer.Start();
 
+                        //this.tileImage();
+                        break;
+                    }
+                default:
+                    {
+                         if (gamePlay.lives > 0)
+                         {
+                            gamePlay.lives = gamePlay.lives - 1;                    
+                             gamePlay.label_lives.Text = "Lives  " + gamePlay.lives.ToString();
+                             
+                        }
+                        break;
 
+                    }
             }
 
-            if (a == "10")
+            if(gamePlay.lives == 0)
             {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[10];
-                /*timer.Enabled = true;
-               this.tile.Hide();
-                tileImage();*/
-
-
-            }
-            if (a == "11")
-            {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[11];
-                //NEED TO FIGURE OUT TIMER
-                /*timer.Enabled = true;
-                this.tile.Hide();
-                tileImage();*/
+                //code to get to the END GAME SCREEN goes here
             }
 
-            else
-            {
-
-                if (gamePlay.lives > 0)
-                {
-                    gamePlay.lives = gamePlay.lives - 1;
-                    gamePlay.label_lives.Text = gamePlay.lives.ToString();
-                }
-                else
-                {
-                    //NEED TO CALL END GAME SCREEN
-                }
-
-                if (this.correctObject == true)
-                {
-
-                    //Code to add mustache to button picture
-                    //Add to score
-                }
-                else
-                {
-                    //Code to remove points from score
-                    //Remove lives
-                }
-
-                //code to fade in and fade out picture and change picture
-            }
+           
         }
     }
 }
