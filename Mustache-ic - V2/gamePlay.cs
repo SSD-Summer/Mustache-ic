@@ -88,7 +88,10 @@ namespace Mustashe_ic
 
             mode = world;
             sub_mode = sub_world;
+            //Initalize static members of tileclass
             tileClass.setAnimalType(world);
+            tileClass.correctTileCount = 0;
+            tileClass.totalTileCount = 0;
 
             init_board(n); //initializes the board
             hide_speed = 3;//How quickly tiles hide, 0 - 3 secs  
@@ -170,7 +173,7 @@ namespace Mustashe_ic
         public static void hideTileImage(int i, int j)
         {
             Tuple<int, int> temp = Tuple.Create(i, j);
-            if (!hiddenList.Contains(temp))
+            if (!hiddenList.Contains(temp) || !board[i,j].clicked)
             {
                 board[i, j].get_random_regularImage();
                 hiddenList.Enqueue(temp);  //add them to the queue
