@@ -24,8 +24,13 @@ namespace Mustashe_ic
         //Controls for game menu
         System.Windows.Forms.Button button_worldsMode;
         System.Windows.Forms.Button button_endlessMode;
+
+        //World Buttons
         System.Windows.Forms.Button button_world1;
-       
+        System.Windows.Forms.Button button_world2;
+        System.Windows.Forms.Button button_world3;
+        System.Windows.Forms.Button button_world4;
+
         //Label associated with the count down before a game start
         System.Windows.Forms.Label label_countDown;
         
@@ -39,6 +44,9 @@ namespace Mustashe_ic
         //Timers for game length and countDown label 
         System.Windows.Forms.Timer timer_game;
         System.Windows.Forms.Timer timer_countDownLabel;
+
+        //Static vars for gathering game mode, and sub-mode
+        static int gameMode, subMode;
         public int count;
         private int score = 0;
         
@@ -112,18 +120,54 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void worldButton_Click(object sender, EventArgs e) //Loads world selection buttons 
         {
+
+            
             button_worldsMode.Hide();
             button_endlessMode.Hide();
             gameMain.ActiveForm.BackgroundImage = Mustache_ic___V2.Properties.Resources.bg1;
             gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
+
+            int x = (gameMain.ActiveForm.Width/2) - 20;
+            int y = (gameMain.ActiveForm.Height/2) - 20;
+
+            //World 1 button
             button_world1 = new Button();
             button_world1.Text = "World 1";
-            button_world1.Size = new Size(250, 195);
-            button_world1.AutoSize = true;
-            button_world1.Location = new Point(20, 20);
+            button_world1.Size = new Size(x, y);
+            button_world1.Location = new Point(5,5); //Top Left corner
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
-            button_world1.Click += new System.EventHandler(level_countdown);
+            button_world1.Tag = 1;
+            button_world1.Click += new EventHandler(level_countdown);
+            //World 2 button
+            button_world2 = new Button();
+            button_world2.Text = "World 2";
+            button_world2.Size = new Size(x, y);
+            button_world2.Location = new Point(x + 5, 5); //Top right corner
+            button_world2.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Right));
+            button_world2.Tag = 2;
+            button_world2.Click += new EventHandler(level_countdown);
+            //World 3 button
+            button_world3 = new Button();
+            button_world3.Text = "World 2";
+            button_world3.Size = new Size(x, y);
+            button_world3.Location = new Point(5, y + 5); //Top right corner
+            button_world3.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Left));
+            button_world3.Tag = 3;
+            button_world3.Click += new EventHandler(level_countdown);
+            //World 4 Button
+            button_world4 = new Button();
+            button_world4.Text = "World 2";
+            button_world4.Size = new Size(x, y);
+            button_world4.Location = new Point(x + 5, y + 5); //Top right corner
+            button_world4.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right));
+            button_world4.Tag = 4;
+            button_world4.Click += new EventHandler(level_countdown);
+
             this.Controls.Add(button_world1);
+            this.Controls.Add(button_world2);
+            this.Controls.Add(button_world3);
+            this.Controls.Add(button_world4);
+
         }
        
         /// <summary>
@@ -133,7 +177,15 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void level_countdown(object sender, EventArgs e)
         {
+            gameMode = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
+            //Also need to grab sub-mode from button sender as well
+
+            //May need to throw this into another method
             button_world1.Hide();
+            button_world2.Hide();
+            button_world3.Hide();
+            button_world4.Hide();
+
             gameMain.ActiveForm.BackgroundImage = null;
             label_countDown = new Label();
             label_countDown.AutoSize = true;
@@ -141,6 +193,7 @@ namespace Mustashe_ic
             label_countDown.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right));
             label_countDown.ForeColor = Color.Red;
             label_countDown.Text = "Ready";
+
             //Sets location to center of form in realtion to the size of the label
             //Need to adjust the location everytime its updated or fix the label size to largest string and center text within label
             label_countDown.Location = new Point(gameMain.ActiveForm.Width / 2 - (label_countDown.Width), gameMain.ActiveForm.Height / 2 - (label_countDown.Height));
@@ -193,10 +246,11 @@ namespace Mustashe_ic
         {
 
             label_countDown.Visible = false;
-            game = new gamePlay(this, 4, 1, 1); //For testing using a 4x4 grid, 1 and 1 are passed to simulate world 1 level 1
+            
+            game = new gamePlay(this, 4, gameMode, 1); //For testing using a 4x4 grid, 1 and 1 are passed to simulate world 1 level 1
 
             timer_game = new System.Windows.Forms.Timer();
-            timer_game.Tick += new EventHandler(timer_Tick);
+            timer_game.Tick += new EventHandler((s,ee)=>timer_Tick(s,ee,timer_game));
             timer_game.Disposed += new EventHandler(results);
             timer_game.Interval = 1000;
             timer_game.Start();
@@ -208,14 +262,14 @@ namespace Mustashe_ic
         /// </summary>
         /// <param name="sender">This would be the control that called this event</param>
         /// <param name="e"></param>
-        private void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e, System.Windows.Forms.Timer gT)
         {
             if(game.timer <= 1)
             {
                 timer_game.Dispose();
             }
 
-            game.gameTick();
+            game.gameTick(gT);
         }
 
         /// <summary>
@@ -223,7 +277,7 @@ namespace Mustashe_ic
         /// </summary>
         /// <param name="sender">Reference to method that calls this event</param>
         /// <param name="e"></param>
-        private void results(object sender, EventArgs e)
+        public void results(object sender, EventArgs e)
         {
             game.hideGameControls();
 

@@ -20,10 +20,20 @@ namespace Mustashe_ic
         public static System.Windows.Forms.ImageList alive_imageList;
         public static System.Windows.Forms.ImageList dead_imageList;
 
+        static int correctTileCount = 0;
+        static int totalTileCount = 0;
+
         //Used to return random numbers - need to remove
         private int num;
+
+        int xLoc, yLoc;
+        int imageHideCounter;
+        System.Windows.Forms.Timer imageTime;
+
         static System.Timers.Timer timer = new System.Timers.Timer();
 
+        //Var used to distinguish which animals are correct for the current game --- Updated everytime a new game is started
+        static int animalType; //
 
         /// <summary>
         /// Default constructor. Sets: 
@@ -33,25 +43,26 @@ namespace Mustashe_ic
         /// </summary>
         public tileClass()
         {
-            correctObject = false;
             tile = new System.Windows.Forms.Button();
-            tile.Click += new EventHandler(tile_clicked);
+            //tile.Click += new EventHandler(tile_clicked);
 
         }
 
-        /// <summary>
-        /// Same as default except sets:
-        ///     correctObject = val
-        /// </summary>
-        /// <param name="val">Manualy sets if tile is the correct selection for that game.</param>
-        public tileClass(bool val)
+        public tileClass(int x, int y)
         {
-            correctObject = val;
             tile = new System.Windows.Forms.Button();
             tile.Click += new EventHandler(tile_clicked);
+            xLoc = x;
+            yLoc = y;
+
+            //tile.Click += new EventHandler(tile_clicked);
 
         }
 
+        public static void setAnimalType(int type)
+        {
+            animalType = type;
+        }
 
         /// <summary>
         /// Random number generator that takes two ints as range and returns a int
@@ -77,33 +88,48 @@ namespace Mustashe_ic
             alive_imageList.ImageSize = new Size(90, 90); //makes the images same size as button
             dead_imageList = new System.Windows.Forms.ImageList();
             dead_imageList.ImageSize = new Size(90, 90);//makes the images same size as button
-            //need to work on image scale settings 
 
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bird);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.chicken);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.dog);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.cat);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.crab);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bronc);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.goldfish);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.jellyfish);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.pig);
-            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.sheep);
+            //0 - 2 are dinos
             alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.steg);
             alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.t_rex);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bronc);
 
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bird_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.chicken_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.dog_moustashe);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.cat_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.crab_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bron_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.goldfish_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.jellyfish_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.pig_moustache);
-            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.sheep_moustache);
+            //3 - 5 are house 
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bird);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.dog);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.cat);
+
+            //6 - 8 are water
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.crab);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.goldfish);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.jellyfish);
+
+            //9 - 11 are farm
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.pig);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.sheep);
+            alive_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.chicken);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            //0 - 2 are dinos
             dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.steg_moustashe);
             dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.t_rex_moustashe);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bron_moustache);
+
+            //3 - 5 are house
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.bird_moustache); 
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.dog_moustashe);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.cat_moustache);
+
+            //6 - 8 are water
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.crab_moustache);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.goldfish_moustache);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.jellyfish_moustache);
+
+            //8 - 11 are farm
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.pig_moustache);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.sheep_moustache);
+            dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.chicken_moustache);
 
         }
 
@@ -118,32 +144,15 @@ namespace Mustashe_ic
         {
             //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
 
-            int a = num_Generator(0, 11);
+            int a = num_Generator(0, 12);
 
             //Adjusts images to current tile size
             alive_imageList.ImageSize = new Size(x, y);
             dead_imageList.ImageSize = new Size(x, y);
 
             this.tile.Image = alive_imageList.Images[a];
-
+            this.tile.Tag = a;
             this.tile.Show();
-
-            if (a == 5)
-            {
-                this.tile.Tag = 5;
-            }
-            else if (a == 10)
-            {
-                this.tile.Tag = 10;
-            }
-            else if (a == 11)
-            {
-                this.tile.Tag = 11;
-            }
-            else
-            {
-                this.tile.Tag = 0;
-            }
         }
 
         /// <summary>
@@ -154,79 +163,124 @@ namespace Mustashe_ic
             this.tile.Hide();
         }
 
-       /* public async Task imageTimer()
+        public void mustacheImage()
         {
-            await Task.Delay(TimeSpan.FromSeconds(30));
-            return Task;
-        }*/
-
-
-
-        /// <summary>
-        /// When image tile is clicked, scores points, SIMPLE NEEDS WORK
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void tile_clicked(object sender, EventArgs e)
-        {
-            //simple scoring-- need to make it image specific
-            int a = int.Parse(this.tile.Tag.ToString());
-
-            switch (a)
-            {
-                case 5:
-                    {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[5];
-                        //timer.Interval = 5000;
-                       // timer.Start();
-
-                        //this.tileImage();
-                        break;
-            }
-                case 10:
-            {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[10];
-                        //timer.Interval = 5000;
-                        //timer.Start();
-
-                        //this.tileImage();
-
-                        break;
-            }
-                case 11:
-            {
-                gamePlay.score = gamePlay.score + 200;
-                gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[11];
-                        //timer.Interval = 5000;
-                        //timer.Start();
-
-                        //this.tileImage();
-                        break;
-            }
-                default:
-            {
-                if (gamePlay.lives > 0)
-                {
-                    gamePlay.lives = gamePlay.lives - 1;
-                             gamePlay.label_lives.Text = "Lives  " + gamePlay.lives.ToString();
-                             
-                        }
-                        break;
-
-                }
-                }
-
-            if(gamePlay.lives == 0)
-                {
-                //code to get to the END GAME SCREEN goes here
-                }
-
-           
+            int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
+            this.tile.Image = dead_imageList.Images[tempTag];
+            this.tile.Show();
         }
+
+        public void get_random_regularImage()
+        {
+            int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
+            int newTag = num_Generator(0, 12);
+            while (newTag == tempTag)
+                newTag = num_Generator(0, 12);
+            this.tile.Image = alive_imageList.Images[newTag];
+        }
+
+        public static Image getMustacheImage(int tag)
+        {
+            return dead_imageList.Images[tag];
+        }
+
+        private void tile_clicked(object sender, EventArgs e)
+        {
+            int tileTag = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
+            
+            //0 - 2 are dinos 
+            //3 - 5 are house
+            //6 - 8 are water
+            //9 - 11 are farm
+
+            if (animalType == 1)
+            {
+                if (tileTag >= 0 && tileTag <= 2)
+                {
+                    gamePlay.score += 200;
+                    gamePlay.label_score.Text = gamePlay.score.ToString();
+                    this.tile.Image = dead_imageList.Images[tileTag];
+                    this.tile.Show();
+                }
+                else
+                {
+                    gamePlay.lives--;
+                    gamePlay.label_lives.Text = gamePlay.lives.ToString();
+
+                }
+            }
+            else if (animalType == 2)
+            {
+                if (tileTag >= 0 && tileTag <= 2)
+                {
+                    gamePlay.score += 200;
+                    gamePlay.label_score.Text = gamePlay.score.ToString();
+                    this.tile.Image = dead_imageList.Images[tileTag];
+                    this.tile.Show();
+                }
+                else
+                {
+                    gamePlay.lives--;
+                    gamePlay.label_lives.Text = gamePlay.lives.ToString();
+
+                }
+            }
+            else if (animalType == 3)
+            {
+                if (tileTag >= 0 && tileTag <= 2)
+                {
+                    gamePlay.score += 200;
+                    gamePlay.label_score.Text = gamePlay.score.ToString();
+                    this.tile.Image = dead_imageList.Images[tileTag];
+                    this.tile.Show();
+                }
+                else
+                {
+                    gamePlay.lives--;
+                    gamePlay.label_lives.Text = gamePlay.lives.ToString();
+
+                }
+            }
+            else if (animalType == 4)
+            {
+                if (tileTag >= 0 && tileTag <= 2)
+                {
+                    gamePlay.score += 200;
+                    gamePlay.label_score.Text = gamePlay.score.ToString();
+                    this.tile.Image = dead_imageList.Images[tileTag];
+                    this.tile.Show();
+                }
+                else
+                {
+                    gamePlay.lives--;
+                    gamePlay.label_lives.Text = gamePlay.lives.ToString();
+
+                }
+            }
+
+            imageTime = new System.Windows.Forms.Timer();
+            imageTime.Tick += new EventHandler(imageTimerTick);
+            imageTime.Interval = 500;
+            imageTime.Disposed += new EventHandler(hide_image);
+            imageHideCounter = 2;
+            imageTime.Start();
+            //gamePlay.hideTileImage(xLoc, yLoc);
+
+        }
+
+        private void imageTimerTick(Object sender, EventArgs e)
+        {
+            --imageHideCounter;
+            if(imageHideCounter <1)
+            {
+                imageTime.Dispose();
+            }
+        }
+
+        private void hide_image(Object sender, EventArgs e)
+        {
+            gamePlay.hideTileImage(this.xLoc, this.yLoc);
+        }
+
     }
 }
