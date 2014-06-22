@@ -16,7 +16,9 @@ namespace Mustashe_ic
         int mode; //0 for endless - 1 - 6? for worlds
         int sub_mode; // 1 - for easiest  --- 10? for hardest
 
-        
+        //Tile dimensions -- Dependent on the size of the board and number of tiles generated
+        int xTileDim;
+        int yTileDim;
 
         public static int score;
         public static int lives;
@@ -93,47 +95,52 @@ namespace Mustashe_ic
             tileClass.correctTileCount = 0;
             tileClass.totalTileCount = 0;
 
-            init_board(n); //initializes the board
+
+            init_Tile_Dimension();
+            init_board(); //initializes the board
             hide_speed = 3;//How quickly tiles hide, 0 - 3 secs  
 
             rand = new Random();  //needed for random generation
             count = rand.Next(hide_speed); //get random tile wait time
             hiddenList = new Queue<Tuple<int, int>>(); //initalizes queue to hold the hidden tiles
         }
+
+
+        private void init_Tile_Dimension()
+        {
+            //I subtract 30 and 44 to add some spacing inbetween the tiles. Need to figure out ratio so that it can auto scale based on the number of tiles.
+            xTileDim = (gameMain.ActiveForm.Width / n) - 30;
+            yTileDim = (gameMain.ActiveForm.Height / n) - 44;
+
+            tileClass.imageList(xTileDim,yTileDim);
+        }
         
         /// <summary>
         /// Initalizes the tile board onto panel_tile_holder
         /// </summary>
         /// <param name="size">The number of tiles on the game board. size x size </param>
-        private void init_board(int size) //Creates a size X size grid of tiles 
+        private void init_board() //Creates a size X size grid of tiles 
         {
-            board = new tileClass[size, size];
-            //xDim and yDim will be the size of the tiles in relation to the form size
-            int xDim, yDim;
-            
-            //I subtract 30 and 44 to add some spacing inbetween the tiles. Need to figure out ratio so that it can auto scale based on the number of tiles.
-            xDim = (gameMain.ActiveForm.Width/size) - 30;
-            yDim = (gameMain.ActiveForm.Height/size) - 44;
+            board = new tileClass[n, n];
 
-            for (int i = 0; i < size; ++i)
+            for (int i = 0; i < n; ++i)
             {
-                for (int j = 0; j < size; ++j)    // This is where I print the gameboard into the panel 
+                for (int j = 0; j < n; ++j)    // This is where I print the gameboard into the panel 
                 {
                     //715x790 - current size of form 6-12-14
                     board[i, j] = new tileClass(i, j);
-                    board[i, j].tile.Size = new System.Drawing.Size(xDim, yDim);
+                    board[i, j].tile.Size = new System.Drawing.Size(xTileDim, yTileDim);
                     board[i, j].tile.BackColor = Color.Transparent;
 
-                    board[i, j].tile.Location = new System.Drawing.Point(i * (xDim - 3) + 60, j * (yDim + 5) + 5);
-                    //
-                    //sets each tile to image from the the imageList
-                    board[i, j].tileImage(xDim, yDim);
-                    //board[i, j].tile.Click += new EventHandler((s, e) => tile_clicked(s, e, i, j));
+                    board[i, j].tile.Location = new System.Drawing.Point(i * (xTileDim - 3) + 60, j * (yTileDim + 5) + 5);
 
-                    //board[i, j].tile.Click += new EventHandler(tile_clicked);
+                    board[i, j].tileImage();
+
                     panel_tile_holder.Controls.Add(board[i, j].tile);
                 }
             }
+
+            int a = 0;
         }
 
         /// <summary>

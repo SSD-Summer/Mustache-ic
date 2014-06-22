@@ -81,12 +81,12 @@ namespace Mustashe_ic
         /// Creates two static ImageList. alive_imageList stores non-moustache images, dead_imageList stores
         /// moustache images. The images are sized to 90 x 90
         /// </summary>
-        public static void imageList()
+        public static void imageList(int x, int y)
         {
             alive_imageList = new System.Windows.Forms.ImageList();
-            alive_imageList.ImageSize = new Size(90, 90); //makes the images same size as button
+            alive_imageList.ImageSize = new Size(x, y); //makes the images same size as button
             dead_imageList = new System.Windows.Forms.ImageList();
-            dead_imageList.ImageSize = new Size(90, 90);//makes the images same size as button
+            dead_imageList.ImageSize = new Size(x, y);//makes the images same size as button
 
             imageCatagorys = new List<Tuple<int, int>>(4);
 
@@ -141,7 +141,7 @@ namespace Mustashe_ic
         /// </summary>
         /// <param name="x">Width of tile image is being attached too</param>
         /// <param name="y">Height of tile image is being attached too</param>
-        public void tileImage(int x, int y)
+        public void tileImage()
         {
             //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
 
@@ -163,8 +163,8 @@ namespace Mustashe_ic
                 correctTileCount++;
 
             //Adjusts images to current tile size
-            alive_imageList.ImageSize = new Size(x, y);
-            dead_imageList.ImageSize = new Size(x, y);
+            //alive_imageList.ImageSize = new Size(x, y);
+            //dead_imageList.ImageSize = new Size(x, y);
 
             this.tile.Image = alive_imageList.Images[a];
             this.tile.Tag = a;
@@ -193,7 +193,7 @@ namespace Mustashe_ic
             while (newTag == tempTag)
                 newTag = num_Generator(0, 12);
 
-
+            this.tile.Tag = newTag;
             this.tile.Image = alive_imageList.Images[newTag];
 
             if (newTag >= imageCatagorys[animalType - 1].Item1 && newTag <= imageCatagorys[animalType - 1].Item2)
@@ -230,82 +230,12 @@ namespace Mustashe_ic
                 gamePlay.label_lives.Text = gamePlay.lives.ToString();
             }
 
-            //if (animalType == 1)
-            //{
-                
-            //    if (tileTag >= 0 && tileTag <= 2)
-            //    {
-            //        gamePlay.score += 200;
-            //        gamePlay.label_score.Text = gamePlay.score.ToString();
-            //        this.tile.Image = dead_imageList.Images[tileTag];
-            //        this.tile.Show();
-            //        correctTileCount--;
-            //    }
-            //    else
-            //    {
-            //        gamePlay.lives--;
-            //        gamePlay.label_lives.Text = gamePlay.lives.ToString();
-
-            //    }
-            //}
-            //else if (animalType == 2)
-            //{
-            //    if (tileTag >= 0 && tileTag <= 2)
-            //    {
-            //        gamePlay.score += 200;
-            //        gamePlay.label_score.Text = gamePlay.score.ToString();
-            //        this.tile.Image = dead_imageList.Images[tileTag];
-            //        this.tile.Show();
-            //        correctTileCount--;
-            //    }
-            //    else
-            //    {
-            //        gamePlay.lives--;
-            //        gamePlay.label_lives.Text = gamePlay.lives.ToString();
-
-            //    }
-            //}
-            //else if (animalType == 3)
-            //{
-            //    if (tileTag >= 0 && tileTag <= 2)
-            //    {
-            //        gamePlay.score += 200;
-            //        gamePlay.label_score.Text = gamePlay.score.ToString();
-            //        this.tile.Image = dead_imageList.Images[tileTag];
-            //        this.tile.Show();
-            //        correctTileCount--
-            //    }
-            //    else
-            //    {
-            //        gamePlay.lives--;
-            //        gamePlay.label_lives.Text = gamePlay.lives.ToString();
-
-            //    }
-            //}
-            //else if (animalType == 4)
-            //{
-            //    if (tileTag >= 0 && tileTag <= 2)
-            //    {
-            //        gamePlay.score += 200;
-            //        gamePlay.label_score.Text = gamePlay.score.ToString();
-            //        this.tile.Image = dead_imageList.Images[tileTag];
-            //        this.tile.Show();
-            //    }
-            //    else
-            //    {
-            //        gamePlay.lives--;
-            //        gamePlay.label_lives.Text = gamePlay.lives.ToString();
-
-            //    }
-            //}
-
             imageTime = new System.Windows.Forms.Timer();
             imageTime.Tick += new EventHandler(imageTimerTick);
             imageTime.Interval = 500;
             imageTime.Disposed += new EventHandler(hide_image);
             imageHideCounter = 2;
             imageTime.Start();
-            //gamePlay.hideTileImage(xLoc, yLoc);
 
         }
 

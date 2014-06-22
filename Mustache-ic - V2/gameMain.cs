@@ -59,10 +59,6 @@ namespace Mustashe_ic
         public gameMain()
         {
             InitializeComponent();
-            tileClass.imageList();
-            //gamePlay game = new gamePlay(this, 4, 1);
-
-
         }
 
         /// <summary>
