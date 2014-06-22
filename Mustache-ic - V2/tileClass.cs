@@ -19,13 +19,13 @@ namespace Mustashe_ic
         //Static image Lists to hold the images from the resouce file
         public static System.Windows.Forms.ImageList alive_imageList;
         public static System.Windows.Forms.ImageList dead_imageList;
-        static List<Tuple<int, int>> imageCatagorys;
+        public static List<Tuple<int, int>> imageCatagorys;
 
         public static int correctTileCount;
         public static int totalTileCount;
 
-        //Used to return random numbers - need to remove
-        private int num;
+        //Used to return random numbers
+        static RandomDist rand;
 
         int xLoc, yLoc;
         int imageHideCounter;
@@ -61,20 +61,7 @@ namespace Mustashe_ic
         public static void setAnimalType(int type)
         {
             animalType = type;
-        }
-
-        /// <summary>
-        /// Random number generator that takes two ints as range and returns a int
-        /// </summary>
-        /// <param name="min_val">Inclusive min value</param>
-        /// <param name="max_val">Exclusive max value</param>
-        /// <returns></returns>
-        private int num_Generator(int min_val, int max_val)
-        {
-
-            Random rand = new Random();
-            num = rand.Next(min_val, max_val);
-            return num;
+            
         }
 
         /// <summary>
@@ -134,6 +121,9 @@ namespace Mustashe_ic
 
             dead_imageList.Images.Add("X",global::Mustache_ic___V2.Properties.Resources.X);
             
+            //Random number generator init
+            rand = new RandomDist(imageCatagorys[animalType - 1].Item2 - 1, 1);
+
         }
 
 
@@ -147,19 +137,15 @@ namespace Mustashe_ic
         {
             //sets images to the tiles. If image_num = 0, moustache pic is displayed on tile and a pause is in place, if image_num = 1, normal pic
 
-            int a = num_Generator(0, 12);
+            int a =rand.equalRandom(0, 12);
 
             totalTileCount++;
 
-            if(totalTileCount > 6 && correctTileCount < 3)
+            if(totalTileCount > 6 && correctTileCount < totalTileCount/3)
             {
-                a = num_Generator(imageCatagorys[animalType - 1].Item1, imageCatagorys[animalType - 1].Item2 + 1);
+                a = (int)rand.getRandomNormal();
             }
-            else if(correctTileCount > totalTileCount/2)
-            {
-                while (a >= imageCatagorys[animalType - 1].Item1 && a <= imageCatagorys[animalType - 1].Item2)
-                    a = num_Generator(0, 12);
-            }
+            
 
             if (a >= imageCatagorys[animalType - 1].Item1 && a <= imageCatagorys[animalType - 1].Item2)
                 correctTileCount++;
@@ -182,20 +168,19 @@ namespace Mustashe_ic
             this.tile.Hide();
         }
 
-        //public void mustacheImage()
-        //{
-        //    int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
-        //    this.tile.Image = dead_imageList.Images[tempTag];
-        //    this.tile.Show();
-        //}
-
         public void get_random_regularImage()
         {
             int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
-            int newTag = num_Generator(0, 12);
-            while (newTag == tempTag)
-                newTag = num_Generator(0, 12);
-
+            int newTag = rand.equalRandom(0, 12);
+            if (totalTileCount > 9 && correctTileCount < totalTileCount / 3)
+            {
+                newTag = (int)rand.getRandomNormal();
+            }
+            else
+            {
+                while (newTag == tempTag)
+                    newTag = rand.equalRandom(0, 12);
+            }
             this.tile.Tag = newTag;
             this.tile.BackgroundImage = alive_imageList.Images[newTag];
             this.tile.Image = null;

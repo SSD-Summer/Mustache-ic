@@ -28,7 +28,7 @@ namespace Mustashe_ic
         public static int totalTileSelected;
 
         private static int count; //This is the variable used to keep track of how often to hide a tile
-        private static int hide_speed; //ints used as random vars
+        private static int hide_speed = 2; //ints used as random vars
 
         //int image_num;//uses rand to select a random image number
         //int num, min_val, max_val;//integers for random number generator
@@ -110,7 +110,7 @@ namespace Mustashe_ic
 
             init_Tile_Dimension();
             init_board(); //initializes the board
-            hide_speed = 3;//How quickly tiles hide, 0 - 3 secs  
+            //hide_speed = 3;//How quickly tiles hide, 0 - 3 secs  
 
             rand = new Random();  //needed for random generation
             count = rand.Next(hide_speed); //get random tile wait time

@@ -58,6 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RandomDist.cs" />
     <Compile Include="tileClass.cs" />
     <EmbeddedResource Include="gameMain.resx">
       <DependentUpon>gameMain.cs</DependentUpon>
