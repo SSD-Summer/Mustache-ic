@@ -132,6 +132,8 @@ namespace Mustashe_ic
             dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.sheep_moustache);
             dead_imageList.Images.Add(global::Mustache_ic___V2.Properties.Resources.chicken_moustache);
 
+            dead_imageList.Images.Add("X",global::Mustache_ic___V2.Properties.Resources.X);
+            
         }
 
 
@@ -162,11 +164,9 @@ namespace Mustashe_ic
             if (a >= imageCatagorys[animalType - 1].Item1 && a <= imageCatagorys[animalType - 1].Item2)
                 correctTileCount++;
 
-            //Adjusts images to current tile size
-            //alive_imageList.ImageSize = new Size(x, y);
-            //dead_imageList.ImageSize = new Size(x, y);
+            this.tile.BackColor = Color.Transparent;
+            this.tile.BackgroundImage = alive_imageList.Images[a];
 
-            this.tile.Image = alive_imageList.Images[a];
             this.tile.Tag = a;
             this.tile.Show();
         }
@@ -179,12 +179,12 @@ namespace Mustashe_ic
             this.tile.Hide();
         }
 
-        public void mustacheImage()
-        {
-            int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
-            this.tile.Image = dead_imageList.Images[tempTag];
-            this.tile.Show();
-        }
+        //public void mustacheImage()
+        //{
+        //    int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
+        //    this.tile.Image = dead_imageList.Images[tempTag];
+        //    this.tile.Show();
+        //}
 
         public void get_random_regularImage()
         {
@@ -194,7 +194,9 @@ namespace Mustashe_ic
                 newTag = num_Generator(0, 12);
 
             this.tile.Tag = newTag;
-            this.tile.Image = alive_imageList.Images[newTag];
+            this.tile.BackgroundImage = alive_imageList.Images[newTag];
+            this.tile.Image = null;
+            //this.tile.Image = alive_imageList.Images[newTag];
 
             if (newTag >= imageCatagorys[animalType - 1].Item1 && newTag <= imageCatagorys[animalType - 1].Item2)
                 correctTileCount++;
@@ -220,14 +222,18 @@ namespace Mustashe_ic
             {
                 gamePlay.score += 200;
                 gamePlay.label_score.Text = gamePlay.score.ToString();
-                this.tile.Image = dead_imageList.Images[tileTag];
+                this.tile.BackgroundImage = dead_imageList.Images[tileTag];
+                //this.tile.Image = dead_imageList.Images[tileTag];
                 this.tile.Show();
                 correctTileCount--;
             }
             else
             {
+                gamePlay.fpanel_Lives.Controls.RemoveAt(gamePlay.lives);
                 gamePlay.lives--;
-                gamePlay.label_lives.Text = gamePlay.lives.ToString();
+
+                this.tile.Image = dead_imageList.Images["X"];
+
             }
 
             imageTime = new System.Windows.Forms.Timer();

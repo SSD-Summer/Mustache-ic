@@ -16,4 +16,3 @@ C:\Users\Jamie\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-
 C:\Users\Jamie\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustashe_ic.gameMain.resources
 C:\Users\Jamie\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache_ic___V2.Properties.Resources.resources
 C:\Users\Jamie\Documents\GitHub\Mustache-ic\Mustache-ic - V2\obj\Debug\Mustache-ic - V2.csproj.GenerateResource.Cache
-C:\Users\Awesome\Documents\GitHub\Mustache-ic\Mustache-ic - V2\bin\Debug\Mustache-ic - V2.exe.config

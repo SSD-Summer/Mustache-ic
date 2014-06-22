@@ -34,6 +34,7 @@ namespace Mustashe_ic
         private static Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
 
         public static System.Windows.Forms.Label label_lives, label_timer, label_score;
+        public static System.Windows.Forms.FlowLayoutPanel fpanel_Lives;
         public System.Windows.Forms.Panel panel_tile_holder;
 
 
@@ -49,18 +50,24 @@ namespace Mustashe_ic
         {
             score = 0; //beginning score to zero
             timer = 30; // Starting time 30 secs
-            lives = 3;
+            lives = 2;
             n = size; //size of tile board - nxn
 
             
             
-            //Lives label generation 
-            label_lives = new System.Windows.Forms.Label();
-            label_lives.Text = "Lives  " + lives;
-            //label_lives.AutoSize = true;
-            label_lives.Location = new System.Drawing.Point(1, 1);
-            label_lives.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
-            label_lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
+            ////Lives label generation 
+            fpanel_Lives = new System.Windows.Forms.FlowLayoutPanel();
+            fpanel_Lives.Location = new Point(1, 1);
+            fpanel_Lives.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
+            fpanel_Lives.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            for (int i = 0; i < 3; ++i)
+            {
+                System.Windows.Forms.PictureBox tmp = new System.Windows.Forms.PictureBox();
+                tmp.Image = global::Mustache_ic___V2.Properties.Resources.lives;
+                tmp.Size = new Size(50, 50);
+                fpanel_Lives.Controls.Add(tmp);
+            }
+
             //timer label generation
             label_timer = new System.Windows.Forms.Label();
             label_timer.Text = timer.ToString();
@@ -84,7 +91,7 @@ namespace Mustashe_ic
 
 
             g.Controls.Add(panel_tile_holder);
-            g.Controls.Add(label_lives);
+            g.Controls.Add(fpanel_Lives);
             g.Controls.Add(label_timer);
             g.Controls.Add(label_score);
 
@@ -139,8 +146,6 @@ namespace Mustashe_ic
                     panel_tile_holder.Controls.Add(board[i, j].tile);
                 }
             }
-
-            int a = 0;
         }
 
         /// <summary>
@@ -151,7 +156,7 @@ namespace Mustashe_ic
         {
             --count; //decremete counter for hiding tile
             --timer;
-            if(lives < 1)
+            if(lives < 0)
             {
                 time.Dispose();
             }
@@ -196,7 +201,8 @@ namespace Mustashe_ic
         public void hideGameControls()
         {
             panel_tile_holder.Hide();
-            label_lives.Hide();
+            //label_lives.Hide();
+            fpanel_Lives.Hide();
             label_score.Hide();
             label_timer.Hide();
         }
