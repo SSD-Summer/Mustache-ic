@@ -165,6 +165,9 @@ namespace Mustashe_ic
                 correctTileCount++;
 
             this.tile.BackColor = Color.Transparent;
+            this.tile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tile.FlatAppearance.BorderSize = 0;
+            
             this.tile.BackgroundImage = alive_imageList.Images[a];
 
             this.tile.Tag = a;
@@ -218,6 +221,8 @@ namespace Mustashe_ic
             //6 - 8 are water
             //9 - 11 are farm
 
+            gamePlay.totalTileSelected++;
+            
             if(tileTag >= imageCatagorys[animalType-1].Item1 && tileTag <= imageCatagorys[animalType-1].Item2)
             {
                 gamePlay.score += 200;
@@ -226,6 +231,7 @@ namespace Mustashe_ic
                 //this.tile.Image = dead_imageList.Images[tileTag];
                 this.tile.Show();
                 correctTileCount--;
+                gamePlay.correctTileSelected++;
             }
             else
             {

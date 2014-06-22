@@ -48,7 +48,6 @@ namespace Mustashe_ic
         //Static vars for gathering game mode, and sub-mode
         static int gameMode, subMode;
         public int count;
-        private int score = 0;
         
         gamePlay game;
 
@@ -281,7 +280,7 @@ namespace Mustashe_ic
             panel_results = new Panel();
             panel_results.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_results.Location = new System.Drawing.Point(0, 0);
-            panel_results.Size = new System.Drawing.Size(698, 715);
+            panel_results.Size = new System.Drawing.Size(gameMain.ActiveForm.Width,gameMain.ActiveForm.Height);
             panel_results.Visible = true;
             panel_results.BackColor = Color.AntiqueWhite;
 
@@ -289,7 +288,7 @@ namespace Mustashe_ic
             label_score = new Label();
             label_score.AutoSize = true;
             label_score.BackColor = System.Drawing.Color.Transparent;
-            label_score.Text = "Score: ";
+            label_score.Text = "Score: " + gamePlay.score.ToString();
             label_score.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             label_score.Location = new System.Drawing.Point(66, 114);
             label_score.Name = "label_score";
@@ -305,8 +304,7 @@ namespace Mustashe_ic
             label_win_lose.Location = new System.Drawing.Point(196, 259);
             label_win_lose.Name = "label_win_lose";
             this.label_win_lose.Size = new System.Drawing.Size(286, 84);
-            label_win_lose.Text = "You Win!";
-            label_win_lose.Visible = true;
+
 
             //Creates a button for the player to return the game modes page
             button_return = new Button();
@@ -340,7 +338,7 @@ namespace Mustashe_ic
             
             //Depending on the player's score, it will say either they won or lost
             int passingScore = 1000;
-            if (score >= passingScore)
+            if (gamePlay.score >= passingScore)
             {
                 label_win_lose.Text = "You Win!"; 
             }

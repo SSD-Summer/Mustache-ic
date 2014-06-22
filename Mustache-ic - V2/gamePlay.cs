@@ -24,6 +24,9 @@ namespace Mustashe_ic
         public static int lives;
         public int timer { set; get; } //Probably will change to helper class
 
+        public static int correctTileSelected;
+        public static int totalTileSelected;
+
         private static int count; //This is the variable used to keep track of how often to hide a tile
         private static int hide_speed; //ints used as random vars
 
@@ -102,6 +105,8 @@ namespace Mustashe_ic
             tileClass.correctTileCount = 0;
             tileClass.totalTileCount = 0;
 
+            correctTileSelected = 0;
+            totalTileSelected = 0;
 
             init_Tile_Dimension();
             init_board(); //initializes the board
