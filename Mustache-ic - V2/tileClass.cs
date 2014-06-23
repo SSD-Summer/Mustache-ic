@@ -170,6 +170,7 @@ namespace Mustashe_ic
 
         public void get_random_regularImage()
         {
+            this.tile.Enabled = true;
             int tempTag = Convert.ToInt32(this.tile.Tag.ToString());
             int newTag = rand.equalRandom(0, 12);
             if (totalTileCount > 9 && correctTileCount < totalTileCount / 3)
@@ -199,6 +200,8 @@ namespace Mustashe_ic
         private void tile_clicked(object sender, EventArgs e)
         {
             clicked = true;
+            this.tile.Enabled = false;
+            
             int tileTag = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
             
             //0 - 2 are dinos 
@@ -220,10 +223,13 @@ namespace Mustashe_ic
             }
             else
             {
-                gamePlay.fpanel_Lives.Controls.RemoveAt(gamePlay.lives);
-                gamePlay.lives--;
+                if (gamePlay.lives >= 0)
+                {
+                    gamePlay.fpanel_Lives.Controls.RemoveAt(gamePlay.lives);
+                    gamePlay.lives--;
 
-                this.tile.Image = dead_imageList.Images["X"];
+                    this.tile.Image = dead_imageList.Images["X"];
+                }
 
             }
 
@@ -233,7 +239,15 @@ namespace Mustashe_ic
             imageTime.Disposed += new EventHandler(hide_image);
             imageHideCounter = 2;
             imageTime.Start();
+           // this.tile.Enabled = true;
+            
+            //need to add fade here
 
+
+        
+        
+
+   
         }
 
         private void imageTimerTick(Object sender, EventArgs e)
