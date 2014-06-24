@@ -165,6 +165,18 @@
   <ItemGroup>
     <None Include="Resources\t_rex_moustashe.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button-4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\small-bell-ring-01a.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Price_Is_Right_loser_clip.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WINNER.WAV" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
