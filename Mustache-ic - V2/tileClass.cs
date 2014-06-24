@@ -238,9 +238,7 @@ namespace Mustashe_ic
             imageTime.Interval = 500;
             imageTime.Disposed += new EventHandler(hide_image);
             imageHideCounter = 2;
-            imageTime.Start();
-           // this.tile.Enabled = true;
-            
+            imageTime.Start();           
             //need to add fade here
 
 
