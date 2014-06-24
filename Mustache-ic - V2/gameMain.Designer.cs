@@ -36,15 +36,16 @@
         {
             this.button_start = new System.Windows.Forms.Button();
             this.button_leaderboard = new System.Windows.Forms.Button();
+            this.button_howTo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_start
             // 
             this.button_start.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_start.Location = new System.Drawing.Point(177, 178);
+            this.button_start.Location = new System.Drawing.Point(177, 140);
             this.button_start.Margin = new System.Windows.Forms.Padding(4);
             this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(328, 143);
+            this.button_start.Size = new System.Drawing.Size(328, 95);
             this.button_start.TabIndex = 1;
             this.button_start.Text = "Start";
             this.button_start.UseVisualStyleBackColor = true;
@@ -53,19 +54,31 @@
             // button_leaderboard
             // 
             this.button_leaderboard.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_leaderboard.Location = new System.Drawing.Point(177, 353);
+            this.button_leaderboard.Location = new System.Drawing.Point(177, 243);
             this.button_leaderboard.Margin = new System.Windows.Forms.Padding(4);
             this.button_leaderboard.Name = "button_leaderboard";
-            this.button_leaderboard.Size = new System.Drawing.Size(328, 93);
+            this.button_leaderboard.Size = new System.Drawing.Size(328, 96);
             this.button_leaderboard.TabIndex = 2;
             this.button_leaderboard.Text = "Leaderboards";
             this.button_leaderboard.UseVisualStyleBackColor = true;
+            // 
+            // button_howTo
+            // 
+            this.button_howTo.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_howTo.Location = new System.Drawing.Point(177, 346);
+            this.button_howTo.Name = "button_howTo";
+            this.button_howTo.Size = new System.Drawing.Size(328, 87);
+            this.button_howTo.TabIndex = 3;
+            this.button_howTo.Text = "How to Play";
+            this.button_howTo.UseVisualStyleBackColor = true;
+            this.button_howTo.Click += new System.EventHandler(this.button_howTo_Click);
             // 
             // gameMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Mustache_ic___V2.Properties.Resources.title;
-            this.ClientSize = new System.Drawing.Size(689, 719);
+            this.ClientSize = new System.Drawing.Size(697, 745);
+            this.Controls.Add(this.button_howTo);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -74,11 +87,14 @@
             this.Name = "gameMain";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button_howTo;
     }
 }
