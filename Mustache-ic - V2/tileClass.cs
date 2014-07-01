@@ -230,8 +230,8 @@ namespace Mustashe_ic
                 gamePlay.label_score.Text = gamePlay.score.ToString();
                 this.tile.BackgroundImage = dead_imageList.Images[tileTag];
                 //this.tile.Image = dead_imageList.Images[tileTag];
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.correct);
-                player.Play();
+                //System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.correct);
+                //player.Play();
                 this.tile.Show();
                 correctTileCount--;
                 gamePlay.correctTileSelected++;
@@ -242,8 +242,8 @@ namespace Mustashe_ic
                 {
                     gamePlay.fpanel_Lives.Controls.RemoveAt(gamePlay.lives);
                     gamePlay.lives--;
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.wrong);
-                    player.Play();
+                    //System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.wrong);
+                    //player.Play();
 
                     this.tile.Image = dead_imageList.Images["X"];
                 }
