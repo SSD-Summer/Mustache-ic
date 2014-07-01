@@ -25,11 +25,17 @@ namespace Mustashe_ic
         System.Windows.Forms.Button button_worldsMode;
         System.Windows.Forms.Button button_endlessMode;
 
-        //World Buttons
-        System.Windows.Forms.Button button_world1;
-        System.Windows.Forms.Button button_world2;
-        System.Windows.Forms.Button button_world3;
-        System.Windows.Forms.Button button_world4;
+        //World Panels
+        System.Windows.Forms.Panel panel_world1;
+        System.Windows.Forms.Panel panel_world2;
+        System.Windows.Forms.Panel panel_world3;
+        System.Windows.Forms.Panel panel_world4;
+
+        //Sub-World buttons
+        List<System.Windows.Forms.Button> list_button_sub_world1;
+        List<System.Windows.Forms.Button> list_button_sub_world2;
+        List<System.Windows.Forms.Button> list_button_sub_world3;
+        List<System.Windows.Forms.Button> list_button_sub_world4;
 
         //Label associated with the count down before a game start
         System.Windows.Forms.Label label_countDown;
@@ -195,57 +201,114 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void worldButton_Click(object sender, EventArgs e) //Loads world selection buttons 
         {
+            //Will probably need to make this a class variable
+            int numSubWorlds = 3;
 
-            
             button_worldsMode.Hide();
             button_endlessMode.Hide();
             gameMain.ActiveForm.BackgroundImage = Mustache_ic___V2.Properties.Resources.bg1;
             gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
 
-            int x = (gameMain.ActiveForm.Width/2) - 20;
-            int y = (gameMain.ActiveForm.Height/2) - 20;
+            int xPanelSize = (gameMain.ActiveForm.Width - 25)/2;
+            int yPanelSize = (gameMain.ActiveForm.Height - 25)/2;
 
-            //World 1 button
-            button_world1 = new Button();
-            button_world1.Text = "Dinosaur";
-            button_world1.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            button_world1.Size = new Size(x, y);
-            button_world1.Location = new Point(5,5); //Top Left corner
-            button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
-            button_world1.Tag = 1;
-            button_world1.Click += new EventHandler(level_countdown);
+            int xButtonSize = xPanelSize - 20;
+            int yButtonSize = (yPanelSize - 250) / numSubWorlds;
+
+            int controlOffset = 5;
+
+            //World 1 Panel & Buttons
+            panel_world1 = new Panel();
+            panel_world1.Size = new Size(xPanelSize, yPanelSize);
+            panel_world1.Location = new Point(controlOffset, controlOffset);
+            panel_world1.Tag = 1;
+
+            list_button_sub_world1 = new List<Button>();
+            for (int i = 0; i < numSubWorlds; ++i )
+            {
+                Button bTmp = new Button();
+                bTmp.Text = "Dinosaur - World " + (i + 1);
+                bTmp.TextAlign = ContentAlignment.MiddleCenter;
+                bTmp.Font = new System.Drawing.Font("Comic Sans MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                bTmp.Size = new Size(xButtonSize, yButtonSize);
+                bTmp.Tag = i + 1;
+                bTmp.Click += new EventHandler(level_countdown);
+                list_button_sub_world1.Add(bTmp);
+                panel_world1.Controls.Add(list_button_sub_world1[i]);
+                list_button_sub_world1[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+
+            }
+
+           
+
             //World 2 button
-            button_world2 = new Button();
-            button_world2.Text = "Pet";
-            button_world2.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            button_world2.Size = new Size(x, y);
-            button_world2.Location = new Point(x + 5, 5); //Top right corner
-            button_world2.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Right));
-            button_world2.Tag = 2;
-            button_world2.Click += new EventHandler(level_countdown);
-            //World 3 button
-            button_world3 = new Button();
-            button_world3.Text = "Aquatic";
-            button_world3.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            button_world3.Size = new Size(x, y);
-            button_world3.Location = new Point(5, y + 5); //Top right corner
-            button_world3.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Left));
-            button_world3.Tag = 3;
-            button_world3.Click += new EventHandler(level_countdown);
-            //World 4 Button
-            button_world4 = new Button();
-            button_world4.Text = "Farm";
-            button_world4.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            button_world4.Size = new Size(x, y);
-            button_world4.Location = new Point(x + 5, y + 5); //Top right corner
-            button_world4.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right));
-            button_world4.Tag = 4;
-            button_world4.Click += new EventHandler(level_countdown);
+            panel_world2 = new Panel();
+            panel_world2.Size = new Size(xPanelSize, yPanelSize);
+            panel_world2.Location = new Point(2*controlOffset + xPanelSize, controlOffset);
+            panel_world2.Tag = 2;
 
-            this.Controls.Add(button_world1);
-            this.Controls.Add(button_world2);
-            this.Controls.Add(button_world3);
-            this.Controls.Add(button_world4);
+            list_button_sub_world2 = new List<Button>(numSubWorlds);
+            for (int i = 0; i < numSubWorlds; ++i)
+            {
+                Button bTmp = new Button();
+                bTmp.Text = "Pet - World " + (i + 1);
+                bTmp.TextAlign = ContentAlignment.MiddleCenter;
+                bTmp.Font = new System.Drawing.Font("Comic Sans MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                bTmp.Size = new Size(xButtonSize, yButtonSize);
+                bTmp.Tag = i + 1;
+                bTmp.Click += new EventHandler(level_countdown);
+                list_button_sub_world2.Add(bTmp);
+                panel_world2.Controls.Add(list_button_sub_world2[i]);
+                list_button_sub_world2[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+
+            }
+            //World 3 button
+            panel_world3 = new Panel();
+            panel_world3.Size = new Size(xPanelSize, yPanelSize);
+            panel_world3.Location = new Point(controlOffset, 2*controlOffset + yPanelSize);
+            panel_world3.Tag = 3;
+
+            list_button_sub_world3 = new List<Button>(numSubWorlds);
+            for (int i = 0; i < numSubWorlds; ++i)
+            {
+                Button bTmp = new Button();
+                bTmp.Text = "Aquatic - World " + (i + 1);
+                bTmp.TextAlign = ContentAlignment.MiddleCenter;
+                bTmp.Font = new System.Drawing.Font("Comic Sans MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                bTmp.Size = new Size(xButtonSize, yButtonSize);
+                bTmp.Tag = i + 1;
+                bTmp.Click += new EventHandler(level_countdown);
+                list_button_sub_world3.Add(bTmp);
+                panel_world3.Controls.Add(list_button_sub_world3[i]);
+                list_button_sub_world3[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+
+            }
+            //World 4 Button
+            panel_world4 = new Panel();
+            panel_world4.Size = new Size(xPanelSize, yPanelSize);
+            panel_world4.Location = new Point(2*controlOffset + xPanelSize, 2*controlOffset + yPanelSize);
+            panel_world4.Tag = 4;
+
+            list_button_sub_world4 = new List<Button>(numSubWorlds);
+            for (int i = 0; i < numSubWorlds; ++i)
+            {
+                Button bTmp = new Button();
+                bTmp.Text = "Dinosaur - World " + (i + 1);
+                bTmp.TextAlign = ContentAlignment.MiddleCenter;
+                bTmp.Font = new System.Drawing.Font("Comic Sans MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                bTmp.Size = new Size(xButtonSize, yButtonSize);
+                bTmp.Tag = i + 1;
+                bTmp.Click += new EventHandler(level_countdown);
+                list_button_sub_world4.Add(bTmp);
+                panel_world4.Controls.Add(list_button_sub_world4[i]);
+                list_button_sub_world4[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+
+            }
+
+            this.Controls.Add(panel_world1);
+            this.Controls.Add(panel_world2);
+            this.Controls.Add(panel_world3);
+            this.Controls.Add(panel_world4);
 
         }
        
@@ -256,14 +319,15 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void level_countdown(object sender, EventArgs e)
         {
-            gameMode = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
+            gameMode = Convert.ToInt32(((Control)sender).Parent.FindForm().Tag);
+            subMode = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
             //Also need to grab sub-mode from button sender as well
 
             //May need to throw this into another method
-            button_world1.Hide();
-            button_world2.Hide();
-            button_world3.Hide();
-            button_world4.Hide();
+            panel_world1.Hide();
+            panel_world2.Hide();
+            panel_world3.Hide();
+            panel_world4.Hide();
 
             gameMain.ActiveForm.BackgroundImage = null;
             label_countDown = new Label();
