@@ -166,22 +166,16 @@
     <None Include="Resources\t_rex_moustashe.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\howTo_page1.png" />
+    <None Include="Resources\button-4.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\howTo_page2.png" />
+    <None Include="Resources\small-bell-ring-01a.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\howTo_page3.png" />
+    <None Include="Resources\Price_Is_Right_loser_clip.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\next.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\about.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\close.png" />
+    <None Include="Resources\WINNER.WAV" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

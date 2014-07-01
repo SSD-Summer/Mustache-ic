@@ -424,11 +424,16 @@ namespace Mustashe_ic
             int passingScore = 1000;
             if (gamePlay.score >= passingScore)
             {
-                label_win_lose.Text = "You Win!"; 
+                label_win_lose.Text = "You Win!";
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.WINNER);
+                player.Play();
+               
             }
             else
             {
                 label_win_lose.Text = "You Lose!";
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.Price_Is_Right_loser_clip);
+                player.Play();
             }
         }
 

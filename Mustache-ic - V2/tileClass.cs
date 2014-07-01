@@ -154,7 +154,7 @@ namespace Mustashe_ic
             this.tile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.tile.FlatAppearance.BorderSize = 0;
             
-            this.tile.BackgroundImage = alive_imageList.Images[a];
+            this.tile.BackgroundImage = alive_imageList.Images[a]; //GET AN ERRORS SOMTIMES, a=-1?!
 
             this.tile.Tag = a;
             this.tile.Show();
@@ -192,11 +192,24 @@ namespace Mustashe_ic
             totalTileCount++;
         }
 
+
+        /// <summary>
+        /// The tag of a image is passed to allow for correct mustache image to be displayed
+        /// </summary>
+        /// <param name="tag">Image tag that identifies the normal image corresponding to its mustache image</param>
+        /// <returns></returns>
         public static Image getMustacheImage(int tag)
         {
             return dead_imageList.Images[tag];
         }
 
+
+
+        /// <summary>
+        /// Sets up all events after a tile is clicked. Determines if image is correct hit or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tile_clicked(object sender, EventArgs e)
         {
             clicked = true;
@@ -217,6 +230,8 @@ namespace Mustashe_ic
                 gamePlay.label_score.Text = gamePlay.score.ToString();
                 this.tile.BackgroundImage = dead_imageList.Images[tileTag];
                 //this.tile.Image = dead_imageList.Images[tileTag];
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.correct);
+                player.Play();
                 this.tile.Show();
                 correctTileCount--;
                 gamePlay.correctTileSelected++;
@@ -227,6 +242,8 @@ namespace Mustashe_ic
                 {
                     gamePlay.fpanel_Lives.Controls.RemoveAt(gamePlay.lives);
                     gamePlay.lives--;
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.wrong);
+                    player.Play();
 
                     this.tile.Image = dead_imageList.Images["X"];
                 }
@@ -239,8 +256,12 @@ namespace Mustashe_ic
             imageTime.Disposed += new EventHandler(hide_image);
             imageHideCounter = 2;
             imageTime.Start();           
-            //need to add fade here
-   
+
+            //----TESTING FADE OR ROATATING IMAGE AFTER CLICK
+            //this.tile.BackgroundImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+           
+            
+
         }
 
         private void imageTimerTick(Object sender, EventArgs e)
