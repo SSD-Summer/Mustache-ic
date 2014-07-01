@@ -240,11 +240,6 @@ namespace Mustashe_ic
             imageHideCounter = 2;
             imageTime.Start();           
             //need to add fade here
-
-
-        
-        
-
    
         }
 

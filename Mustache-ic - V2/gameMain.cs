@@ -45,6 +45,10 @@ namespace Mustashe_ic
         System.Windows.Forms.Timer timer_game;
         System.Windows.Forms.Timer timer_countDownLabel;
 
+        System.Windows.Forms.Panel panel_howTo;
+        System.Windows.Forms.PictureBox pictureBox_next;
+        System.Windows.Forms.PictureBox pictureBox_exit;
+
         //Static vars for gathering game mode, and sub-mode
         static int gameMode, subMode;
         public int count;
@@ -74,6 +78,7 @@ namespace Mustashe_ic
             {
                 button_start.Hide();
                 button_leaderboard.Hide();
+                button_howTo.Hide();
 
             }
             if((Button)sender == button_return)
@@ -90,6 +95,7 @@ namespace Mustashe_ic
             button_worldsMode = new Button();
             button_worldsMode.Text = "Worlds";
             button_worldsMode.Size = new Size(250, 390);
+            button_worldsMode.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_worldsMode.AutoSize = true;
             button_worldsMode.Location = new Point(75, 144);
             button_worldsMode.Anchor = ((System.Windows.Forms.AnchorStyles)(AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top));
@@ -100,11 +106,85 @@ namespace Mustashe_ic
             button_endlessMode = new Button();
             button_endlessMode.Text = "Endless";
             button_endlessMode.Size = new Size(250, 390);
+            button_endlessMode.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_endlessMode.AutoSize = true;
             button_endlessMode.Location = new Point(375, 144);
             button_endlessMode.Anchor = ((AnchorStyles)(AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom));
             //Needs event
             this.Controls.Add(button_endlessMode);            
+        }
+        /// <summary>
+        /// Creates the How to Play instructions window when the button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_howTo_Click(object sender, EventArgs e)
+        {
+            //Hides main menu buttons and creates a panel for the instuctions to be shown on
+            button_start.Hide();
+            button_leaderboard.Hide();
+            button_howTo.Hide();
+            panel_howTo = new Panel();
+            panel_howTo.Size = new Size(570, 369);
+            panel_howTo.Location = new Point(85, 140);
+            panel_howTo.BackgroundImage = Mustache_ic___V2.Properties.Resources.howTo_page1;
+
+            //Creates a next page icon
+            pictureBox_next = new PictureBox();
+            pictureBox_next.Size = new Size(45, 45);
+            pictureBox_next.BackgroundImage = Mustache_ic___V2.Properties.Resources.next;
+            pictureBox_next.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox_next.BackColor = Color.Transparent;
+            pictureBox_next.Location = new Point(490, 320);
+
+            //Creates an exit icon
+            pictureBox_exit = new PictureBox();
+            pictureBox_exit.Size = new Size(45, 45);
+            pictureBox_exit.BackgroundImage = Mustache_ic___V2.Properties.Resources.close;
+            pictureBox_exit.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox_exit.BackColor = Color.Transparent;
+            pictureBox_exit.Location = new Point(490, 120);
+
+            panel_howTo.Controls.Add(pictureBox_next);
+            panel_howTo.Controls.Add(pictureBox_exit);
+            this.Controls.Add(panel_howTo);
+
+            pictureBox_next.Click += new EventHandler(pictureBox_next_Click);
+            pictureBox_exit.Click += new EventHandler(pictureBox_close_Click);
+
+        }
+        /// <summary>
+        /// Moves to the next page on the How to Play instructions.
+        /// </summary>
+        int num = 0;
+        private void pictureBox_next_Click(object sender, EventArgs e)
+        {
+            ++num;
+            switch(num)
+            {
+                case 1:
+                    panel_howTo.BackgroundImage = Mustache_ic___V2.Properties.Resources.howTo_page2;
+                    
+                    break;
+                case 2:
+                    panel_howTo.BackgroundImage = Mustache_ic___V2.Properties.Resources.howTo_page3;
+                    break;
+                default:
+                    break;
+            }
+        }
+        /// <summary>
+        /// Closes the How to Play window and returns to the main page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBox_close_Click(object sender, EventArgs e)
+        {
+            panel_howTo.Hide();
+            button_start.Show();
+            button_leaderboard.Show();
+            button_howTo.Show();
+
         }
 
         /// <summary>
@@ -127,7 +207,8 @@ namespace Mustashe_ic
 
             //World 1 button
             button_world1 = new Button();
-            button_world1.Text = "World 1";
+            button_world1.Text = "Dinosaur";
+            button_world1.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_world1.Size = new Size(x, y);
             button_world1.Location = new Point(5,5); //Top Left corner
             button_world1.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left));
@@ -135,7 +216,8 @@ namespace Mustashe_ic
             button_world1.Click += new EventHandler(level_countdown);
             //World 2 button
             button_world2 = new Button();
-            button_world2.Text = "World 2";
+            button_world2.Text = "Pet";
+            button_world2.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_world2.Size = new Size(x, y);
             button_world2.Location = new Point(x + 5, 5); //Top right corner
             button_world2.Anchor = ((AnchorStyles)(AnchorStyles.Top | AnchorStyles.Right));
@@ -143,7 +225,8 @@ namespace Mustashe_ic
             button_world2.Click += new EventHandler(level_countdown);
             //World 3 button
             button_world3 = new Button();
-            button_world3.Text = "World 2";
+            button_world3.Text = "Aquatic";
+            button_world3.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_world3.Size = new Size(x, y);
             button_world3.Location = new Point(5, y + 5); //Top right corner
             button_world3.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Left));
@@ -151,7 +234,8 @@ namespace Mustashe_ic
             button_world3.Click += new EventHandler(level_countdown);
             //World 4 Button
             button_world4 = new Button();
-            button_world4.Text = "World 2";
+            button_world4.Text = "Farm";
+            button_world4.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             button_world4.Size = new Size(x, y);
             button_world4.Location = new Point(x + 5, y + 5); //Top right corner
             button_world4.Anchor = ((AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right));
@@ -347,6 +431,8 @@ namespace Mustashe_ic
                 label_win_lose.Text = "You Lose!";
             }
         }
+
+
     }
     
 }
