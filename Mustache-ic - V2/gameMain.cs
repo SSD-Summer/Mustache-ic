@@ -222,6 +222,7 @@ namespace Mustashe_ic
             panel_world1.Size = new Size(xPanelSize, yPanelSize);
             panel_world1.Location = new Point(controlOffset, controlOffset);
             panel_world1.Tag = 1;
+            panel_world1.BackColor = Color.Transparent;
 
             list_button_sub_world1 = new List<Button>();
             for (int i = 0; i < numSubWorlds; ++i )
@@ -239,13 +240,12 @@ namespace Mustashe_ic
 
             }
 
-           
-
             //World 2 button
             panel_world2 = new Panel();
             panel_world2.Size = new Size(xPanelSize, yPanelSize);
             panel_world2.Location = new Point(2*controlOffset + xPanelSize, controlOffset);
             panel_world2.Tag = 2;
+            panel_world2.BackColor = Color.Transparent;
 
             list_button_sub_world2 = new List<Button>(numSubWorlds);
             for (int i = 0; i < numSubWorlds; ++i)
@@ -267,6 +267,7 @@ namespace Mustashe_ic
             panel_world3.Size = new Size(xPanelSize, yPanelSize);
             panel_world3.Location = new Point(controlOffset, 2*controlOffset + yPanelSize);
             panel_world3.Tag = 3;
+            panel_world3.BackColor = Color.Transparent;
 
             list_button_sub_world3 = new List<Button>(numSubWorlds);
             for (int i = 0; i < numSubWorlds; ++i)
@@ -288,6 +289,7 @@ namespace Mustashe_ic
             panel_world4.Size = new Size(xPanelSize, yPanelSize);
             panel_world4.Location = new Point(2*controlOffset + xPanelSize, 2*controlOffset + yPanelSize);
             panel_world4.Tag = 4;
+            panel_world4.BackColor = Color.Transparent;
 
             list_button_sub_world4 = new List<Button>(numSubWorlds);
             for (int i = 0; i < numSubWorlds; ++i)
@@ -319,7 +321,7 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void level_countdown(object sender, EventArgs e)
         {
-            gameMode = Convert.ToInt32(((Control)sender).Parent.FindForm().Tag);
+            gameMode = Convert.ToInt32(((Control)sender).Parent.Tag);
             subMode = Convert.ToInt32(sender.GetType().GetProperty("Tag").GetValue(sender));
             //Also need to grab sub-mode from button sender as well
 
