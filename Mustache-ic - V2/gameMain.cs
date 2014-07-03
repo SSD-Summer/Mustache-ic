@@ -351,7 +351,7 @@ namespace Mustashe_ic
             count = 1;
             timer_countDownLabel = new System.Windows.Forms.Timer();
             timer_countDownLabel.Tick += new EventHandler(labelTimer_tick);
-            timer_countDownLabel.Disposed += new EventHandler(world_startGame);
+            timer_countDownLabel.Disposed += new  EventHandler(world_startGame);
             timer_countDownLabel.Interval = 1000;
             timer_countDownLabel.Enabled = true;
 
@@ -393,7 +393,7 @@ namespace Mustashe_ic
 
             label_countDown.Visible = false;
             
-            game = new gamePlay(this, 4, gameMode, 1); //For testing using a 4x4 grid, 1 and 1 are passed to simulate world 1 level 1
+            game = new gamePlay(this, 4, gameMode, subMode); //For testing using a 4x4 grid, 1 and 1 are passed to simulate world 1 level 1
 
             timer_game = new System.Windows.Forms.Timer();
             timer_game.Tick += new EventHandler((s,ee)=>timer_Tick(s,ee,timer_game));

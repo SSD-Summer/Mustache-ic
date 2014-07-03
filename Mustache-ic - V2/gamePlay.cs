@@ -36,7 +36,7 @@ namespace Mustashe_ic
        
         private static Queue<Tuple<int, int>> hiddenList; //Used as holder for hidden tiles - Stores x and y coordinate of tile in tuple
 
-        public static System.Windows.Forms.Label label_lives, label_timer, label_score;
+        public static System.Windows.Forms.Label label_timer, label_score;
         public static System.Windows.Forms.FlowLayoutPanel fpanel_Lives;
         public System.Windows.Forms.Panel panel_tile_holder;
 
