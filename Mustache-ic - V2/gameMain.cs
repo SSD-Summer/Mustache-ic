@@ -216,6 +216,7 @@ namespace Mustashe_ic
             int yButtonSize = (yPanelSize - 250) / numSubWorlds;
 
             int controlOffset = 5;
+            int panelVerticalOffset = (yPanelSize - (yButtonSize * numSubWorlds)) / (numSubWorlds - 1) - 75;
 
             //World 1 Panel & Buttons
             panel_world1 = new Panel();
@@ -236,7 +237,7 @@ namespace Mustashe_ic
                 bTmp.Click += new EventHandler(level_countdown);
                 list_button_sub_world1.Add(bTmp);
                 panel_world1.Controls.Add(list_button_sub_world1[i]);
-                list_button_sub_world1[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+                list_button_sub_world1[i].Location = new Point(controlOffset, i * yButtonSize + panelVerticalOffset*(i+1));
 
             }
 
@@ -259,7 +260,7 @@ namespace Mustashe_ic
                 bTmp.Click += new EventHandler(level_countdown);
                 list_button_sub_world2.Add(bTmp);
                 panel_world2.Controls.Add(list_button_sub_world2[i]);
-                list_button_sub_world2[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+                list_button_sub_world2[i].Location = new Point(controlOffset, i * yButtonSize + panelVerticalOffset * (i + 1));
 
             }
             //World 3 button
@@ -281,7 +282,7 @@ namespace Mustashe_ic
                 bTmp.Click += new EventHandler(level_countdown);
                 list_button_sub_world3.Add(bTmp);
                 panel_world3.Controls.Add(list_button_sub_world3[i]);
-                list_button_sub_world3[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+                list_button_sub_world3[i].Location = new Point(controlOffset, i * yButtonSize + panelVerticalOffset * (i + 1));
 
             }
             //World 4 Button
@@ -303,7 +304,7 @@ namespace Mustashe_ic
                 bTmp.Click += new EventHandler(level_countdown);
                 list_button_sub_world4.Add(bTmp);
                 panel_world4.Controls.Add(list_button_sub_world4[i]);
-                list_button_sub_world4[i].Location = new Point(controlOffset, i * yButtonSize + controlOffset * (i + 1));
+                list_button_sub_world4[i].Location = new Point(controlOffset, i * yButtonSize + panelVerticalOffset * (i + 1));
 
             }
 
