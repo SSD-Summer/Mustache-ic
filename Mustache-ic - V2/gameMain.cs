@@ -82,8 +82,8 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         private void button_leaderboard_Click(object sender, EventArgs e)
         {
-//STILL NEEDS WORK, CANNOT DISPLAY LISTBOX ON PANEL
-            //listBox_leaderboard = new ListBox();
+
+            
 
             gameMain.ActiveForm.BackgroundImage = null;
             gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
@@ -424,23 +424,21 @@ namespace Mustashe_ic
         /// Creates a listBox that stores leaderboard. Queries are used with contraints to get information from Parse.com
         /// </summary>
         async private void get_leaderboard()
-        {
-            
-
+        {            
             var query = from gameScore in ParseObject.GetQuery("GameScore")
                         orderby gameScore.Get<string>("score") descending
                         select gameScore;
-            query = query.Limit(5);
-            IEnumerable<ParseObject> results = await query.FindAsync();
+            var query_top_five = query.Limit(5);
+            //var query_highscore = query.
+            IEnumerable<ParseObject> results_top_five = await query_top_five.FindAsync();
             int i = 1;
-            foreach (var record in results)
-            {
-                
+            foreach (var record in results_top_five)
+            {                
                 var score = record.Get<Int64>("score");
                 var playerName = record.Get<String>("playerName");
                 listBox_leaderboard.Items.Add(i + ". " + playerName + " " + score);
                 i++;
-                Console.Write(score);
+               //Console.Write(score);
             }
             listBox_leaderboard.Items.Add(".........");
             listBox_leaderboard.Show();
