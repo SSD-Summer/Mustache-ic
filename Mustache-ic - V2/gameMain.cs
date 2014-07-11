@@ -420,12 +420,13 @@ namespace Mustashe_ic
 
             game.gameTick(gT);
         }
+//GET LEADERBOARD
         /// <summary>
         /// Creates a listBox that stores leaderboard. Queries are used with contraints to get information from Parse.com
         /// </summary>
         async private void get_leaderboard()
         {
-            listBox_leaderboard = new ListBox();
+            //listBox_leaderboard = new ListBox();
 
             var query = from gameScore in ParseObject.GetQuery("GameScore")
                         orderby gameScore.Get<string>("score") descending
@@ -442,8 +443,7 @@ namespace Mustashe_ic
                 i++;
                 Console.Write(score);
             }
-            //listBox_leaderboard.Items.Add(".........");
-
+            listBox_leaderboard.Items.Add(".........");
             listBox_leaderboard.Show();
         }
 
@@ -475,10 +475,10 @@ namespace Mustashe_ic
         {
             game.hideGameControls();
 
-            /*int x = gameMain.ActiveForm.Width;
+            int x = gameMain.ActiveForm.Width;
             int x_textbox = 0;
             int x_button = 0;
-            int x_win = 0;*/
+            int x_win = 0;
 
 
            //Creates a panel for results of the game to show
@@ -593,6 +593,7 @@ namespace Mustashe_ic
                 label_win_lose.Text = "You Lose!";
                 button_leaderboard_name_save.Hide();
                 textbox_leaderboard.Hide();
+                //listBox_leaderboard.Hide();
                 //System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.Price_Is_Right_loser_clip);
                 //player.Play();
                 get_leaderboard();
