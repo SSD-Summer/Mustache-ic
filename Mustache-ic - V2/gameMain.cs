@@ -83,7 +83,7 @@ namespace Mustashe_ic
         private void button_leaderboard_Click(object sender, EventArgs e)
         {
 //STILL NEEDS WORK, CANNOT DISPLAY LISTBOX ON PANEL
-            /*listBox_leaderboard = new ListBox();
+            //listBox_leaderboard = new ListBox();
 
             gameMain.ActiveForm.BackgroundImage = null;
             gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
@@ -115,20 +115,19 @@ namespace Mustashe_ic
             //x_label = (x_label - label_leaderboard_header.Width) / 2;
             label_leaderboard_header.Location = new System.Drawing.Point(150, 50);
             label_leaderboard_header.Name = "label_leaderboard_header";
-            //label_score.Visible = true;            
+                        
 
             //Adds objects to panel
             panel_leaderboard.Controls.Add(label_leaderboard_header);
             panel_leaderboard.Controls.Add(listBox_leaderboard);
-            this.Controls.Add(panel_leaderboard);
-            //listBox1_leaderboard.Hide();
+            this.Controls.Add(panel_leaderboard);           
             button_howTo.Hide();
             button_leaderboard.Hide();
             button_start.Hide();
             panel_leaderboard.BringToFront();
             panel_leaderboard.Show();
             label_leaderboard_header.Show();
-            get_leaderboard();*/
+            get_leaderboard();
         }
 
         /// <summary>
@@ -426,7 +425,7 @@ namespace Mustashe_ic
         /// </summary>
         async private void get_leaderboard()
         {
-            //listBox_leaderboard = new ListBox();
+            
 
             var query = from gameScore in ParseObject.GetQuery("GameScore")
                         orderby gameScore.Get<string>("score") descending
