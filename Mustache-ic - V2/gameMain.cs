@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms.Integration;
 
 
 /*Dominic Cox
@@ -76,7 +77,7 @@ namespace Mustashe_ic
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_start_Click(object sender, EventArgs e)
+        protected void button_start_Click(object sender, EventArgs e)
         {
 
             //On Start click - Hide everything currently active on the form
@@ -107,6 +108,7 @@ namespace Mustashe_ic
             button_worldsMode.Anchor = ((System.Windows.Forms.AnchorStyles)(AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top));
             button_worldsMode.Click += new System.EventHandler(worldButton_Click); //Bind button click event to worldButton_click function
             this.Controls.Add(button_worldsMode);
+
 
             //Creates endless mode button
             button_endlessMode = new Button();

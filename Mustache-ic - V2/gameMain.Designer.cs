@@ -5,8 +5,13 @@
         public System.Windows.Forms.ImageList imageList;
 
         private System.Windows.Forms.Button button_leaderboard;
-
+        //private System.Windows.Forms.Integration.ElementHost button_start;
+        //private Mustache_ic___V2.UserControl1 wpfUserControl; 
         private System.Windows.Forms.Button button_start;
+       
+        private System.Windows.Forms.Button button_howTo;
+
+
 
         /// <summary>
         /// Required designer variable.
@@ -34,6 +39,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            //this.button_start = new System.Windows.Forms.Integration.ElementHost();
+            //this.wpfUserControl = new Mustache_ic___V2.UserControl1();
             this.button_start = new System.Windows.Forms.Button();
             this.button_leaderboard = new System.Windows.Forms.Button();
             this.button_howTo = new System.Windows.Forms.Button();
@@ -41,6 +48,9 @@
             // 
             // button_start
             // 
+            //this.button_start.Child = wpfUserControl;
+            //this.wpfUserControl._buttonText.Text = "Start";
+            //this.button_start.BackColorTransparent = true;
             this.button_start.Font = new System.Drawing.Font("Comic Sans MS", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_start.Location = new System.Drawing.Point(177, 140);
             this.button_start.Margin = new System.Windows.Forms.Padding(4);
@@ -50,6 +60,7 @@
             this.button_start.Text = "Start";
             this.button_start.UseVisualStyleBackColor = true;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
+            this.Controls.Add(button_start);
             // 
             // button_leaderboard
             // 
@@ -95,6 +106,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button_howTo;
+        
     }
 }
