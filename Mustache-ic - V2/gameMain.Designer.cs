@@ -72,6 +72,7 @@
             this.button_leaderboard.TabIndex = 2;
             this.button_leaderboard.Text = "Leaderboards";
             this.button_leaderboard.UseVisualStyleBackColor = true;
+            this.button_leaderboard.Click += new System.EventHandler(this.button_leaderboard_Click);
             // 
             // button_howTo
             // 
@@ -88,13 +89,13 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = global::Mustache_ic___V2.Properties.Resources.title;
-            this.ClientSize = new System.Drawing.Size(697, 745);
+            this.ClientSize = new System.Drawing.Size(699, 741);
             this.Controls.Add(this.button_howTo);
             this.Controls.Add(this.button_leaderboard);
             this.Controls.Add(this.button_start);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(715, 790);
-            this.MinimumSize = new System.Drawing.Size(715, 790);
+            this.MinimumSize = new System.Drawing.Size(715, 726);
             this.Name = "gameMain";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

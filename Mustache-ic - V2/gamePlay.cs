@@ -211,5 +211,11 @@ namespace Mustashe_ic
             label_score.Hide();
             label_timer.Hide();
         }
+
+//METHOD TO HIDE RESULTS PAGE
+        public void hideGameResults()
+        {
+
+        }
     }
 }

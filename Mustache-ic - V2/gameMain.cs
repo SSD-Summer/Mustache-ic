@@ -9,7 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using System.Windows.Forms.Integration;
+using System.IO;
+using Parse;
 
 
 /*Dominic Cox
@@ -47,6 +48,11 @@ namespace Mustashe_ic
         System.Windows.Forms.Label label_score;
         System.Windows.Forms.Button button_return;
         System.Windows.Forms.Button button_continue;
+        System.Windows.Forms.Panel panel_leaderboard;
+        System.Windows.Forms.TextBox textbox_leaderboard;
+        System.Windows.Forms.Label label_leaderboard_header;
+        System.Windows.Forms.Button button_leaderboard_name_save;
+        System.Windows.Forms.ListBox listBox_leaderboard;       
 
         //Timers for game length and countDown label 
         System.Windows.Forms.Timer timer_game;
@@ -69,6 +75,65 @@ namespace Mustashe_ic
         public gameMain()
         {
             InitializeComponent();
+            //id and code for Parse.com login to access the cloud
+            ParseClient.Initialize("gVFLRivE2BDd5G1coDrbZb5yybE9IE9fCRJPRJZ4", "faQz2eCOBZJCfA0jWUgk339BnMFShETKpRsfkfTL");
+        }
+
+
+        /// <summary>
+        /// Event when Leaderboard button is clicked on main form.
+        /// Shows the header and the listBox with the top 5 players
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_leaderboard_Click(object sender, EventArgs e)
+        {
+
+            
+
+            gameMain.ActiveForm.BackgroundImage = null;
+            gameMain.ActiveForm.BackgroundImageLayout = ImageLayout.Stretch;
+
+            //Creates a listBox for the top 5 leaderboard
+            listBox_leaderboard = new ListBox();
+            listBox_leaderboard.FormattingEnabled = true;
+            listBox_leaderboard.Location = new System.Drawing.Point(251, 200);
+            listBox_leaderboard.Name = "listBox_leaderboard";
+            listBox_leaderboard.Size = new System.Drawing.Size(200, 200);
+            listBox_leaderboard.TabIndex = 0;
+            listBox_leaderboard.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);
+            
+            //New panel
+            panel_leaderboard = new Panel();
+            panel_leaderboard.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel_leaderboard.Location = new System.Drawing.Point(0, 0);
+            panel_leaderboard.Size = new System.Drawing.Size(gameMain.ActiveForm.Width, gameMain.ActiveForm.Height);
+            panel_leaderboard.Visible = true;
+            panel_leaderboard.BackColor = Color.AntiqueWhite;
+
+            //Creates a Leaderboard Header
+            label_leaderboard_header = new Label();
+            label_leaderboard_header.AutoSize = true;
+            label_leaderboard_header.BackColor = System.Drawing.Color.Transparent;
+            label_leaderboard_header.Size = new System.Drawing.Size(200, 200);
+            label_leaderboard_header.Text = "LEADERBOARD";
+            label_leaderboard_header.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            //x_label = (x_label - label_leaderboard_header.Width) / 2;
+            label_leaderboard_header.Location = new System.Drawing.Point(150, 50);
+            label_leaderboard_header.Name = "label_leaderboard_header";
+                        
+
+            //Adds objects to panel
+            panel_leaderboard.Controls.Add(label_leaderboard_header);
+            panel_leaderboard.Controls.Add(listBox_leaderboard);
+            this.Controls.Add(panel_leaderboard);           
+            button_howTo.Hide();
+            button_leaderboard.Hide();
+            button_start.Hide();
+            panel_leaderboard.BringToFront();
+            panel_leaderboard.Show();
+            label_leaderboard_header.Show();
+            get_leaderboard();
         }
 
         /// <summary>
@@ -79,6 +144,7 @@ namespace Mustashe_ic
         /// <param name="e"></param>
         protected void button_start_Click(object sender, EventArgs e)
         {
+
 
             //On Start click - Hide everything currently active on the form
             if ((Button)sender == button_start)
@@ -121,6 +187,8 @@ namespace Mustashe_ic
             //Needs event
             this.Controls.Add(button_endlessMode);            
         }
+
+        
         /// <summary>
         /// Creates the How to Play instructions window when the button is clicked.
         /// </summary>
@@ -419,7 +487,50 @@ namespace Mustashe_ic
 
             game.gameTick(gT);
         }
+//GET LEADERBOARD
+        /// <summary>
+        /// Creates a listBox that stores leaderboard. Queries are used with contraints to get information from Parse.com
+        /// </summary>
+        async private void get_leaderboard()
+        {            
+            var query = from gameScore in ParseObject.GetQuery("GameScore")
+                        orderby gameScore.Get<string>("score") descending
+                        select gameScore;
+            var query_top_five = query.Limit(5);
+            //var query_highscore = query.
+            IEnumerable<ParseObject> results_top_five = await query_top_five.FindAsync();
+            int i = 1;
+            foreach (var record in results_top_five)
+            {                
+                var score = record.Get<Int64>("score");
+                var playerName = record.Get<String>("playerName");
+                listBox_leaderboard.Items.Add(i + ". " + playerName + " " + score);
+                i++;
+               //Console.Write(score);
+            }
+            listBox_leaderboard.Items.Add(".........");
+            listBox_leaderboard.Show();
+        }
 
+        /// <summary>
+        /// Event when submit button is clicked to save players name after winning a level.
+        /// The event sends the information to Parse.com and saves it in gamescore
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        async private void save_name(object sender, EventArgs e)
+        {
+            string name = textbox_leaderboard.Text;
+            ParseObject gameScore = new ParseObject("GameScore");
+            gameScore["score"] = gamePlay.score;
+            gameScore["playerName"] = name;
+            await gameScore.SaveAsync();
+
+            textbox_leaderboard.Hide();
+            button_leaderboard_name_save.Hide();
+            get_leaderboard();
+        }
         /// <summary>
         /// Shows the player's score, whether they win/lose, and the top 10 on the leaderboard for the current level.
         /// </summary>
@@ -429,11 +540,17 @@ namespace Mustashe_ic
         {
             game.hideGameControls();
 
+            int x = gameMain.ActiveForm.Width;
+            int x_textbox = 0;
+            int x_button = 0;
+            int x_win = 0;
+
+
            //Creates a panel for results of the game to show
             panel_results = new Panel();
             panel_results.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_results.Location = new System.Drawing.Point(0, 0);
-            panel_results.Size = new System.Drawing.Size(gameMain.ActiveForm.Width,gameMain.ActiveForm.Height);
+            panel_results.Size = new System.Drawing.Size(gameMain.ActiveForm.Width,gameMain.ActiveForm.Height);//THROWS ERROR EXCEPTION
             panel_results.Visible = true;
             panel_results.BackColor = Color.AntiqueWhite;
 
@@ -443,7 +560,7 @@ namespace Mustashe_ic
             label_score.BackColor = System.Drawing.Color.Transparent;
             label_score.Text = "Score: " + gamePlay.score.ToString();
             label_score.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label_score.Location = new System.Drawing.Point(66, 114);
+            label_score.Location = new System.Drawing.Point(0, 0);//66, 114
             label_score.Name = "label_score";
             label_score.Visible = true;
   
@@ -454,16 +571,17 @@ namespace Mustashe_ic
             label_win_lose.BackColor = System.Drawing.Color.Transparent;
             label_win_lose.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             label_win_lose.ForeColor = System.Drawing.Color.Red;
-            label_win_lose.Location = new System.Drawing.Point(196, 259);
+            //x_win = ((x/2) - (label_win_lose.Width/2));
+            label_win_lose.Location = new System.Drawing.Point(212, 100);
             label_win_lose.Name = "label_win_lose";
-            this.label_win_lose.Size = new System.Drawing.Size(286, 84);
+            this.label_win_lose.Size = new System.Drawing.Size(286, 86);
 
 
             //Creates a button for the player to return the game modes page
             button_return = new Button();
             button_return.AutoSize = true;
-            button_return.Size = new System.Drawing.Size(200, 100);
-            button_return.Location = new Point(100, 400);
+            button_return.Size = new System.Drawing.Size(100, 50);//200, 100
+            button_return.Location = new Point(100, 650);//100, 400
             button_return.Text = "Return";
             button_return.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
             button_return.Click += new EventHandler(button_start_Click);
@@ -471,22 +589,56 @@ namespace Mustashe_ic
             //Creates a button for the player to move onto the next levels
             button_continue = new Button();
             button_continue.AutoSize = true;
-            button_continue.Size = new System.Drawing.Size(200, 100);
-            button_continue.Location = new Point(400, 400);
+            button_continue.Size = new System.Drawing.Size(100, 50);//200, 100
+            button_continue.Location = new Point(400, 650);//400, 400
             button_continue.Text = "Continue";
             button_continue.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
+
+            //Creates TextBox for leadboard name entry
+            textbox_leaderboard = new TextBox();
+            //x_textbox = (x - textbox_leaderboard.Width) / 2;            
+            textbox_leaderboard.Name = "textbox_leaderboard";
+            textbox_leaderboard.Size = new System.Drawing.Size(350, 150);
+            textbox_leaderboard.TabIndex = 0;
+            textbox_leaderboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            textbox_leaderboard.Location = new System.Drawing.Point(180, 400);
+
+            // this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+
+            //Creates a button to save name for leaderboard
+            button_leaderboard_name_save = new Button();
+            button_leaderboard_name_save.AutoSize = true;
+            //x_button = (x - button_leaderboard_name_save.Width) / 2;
+            button_leaderboard_name_save.Size = new System.Drawing.Size(100, 50);            
+            button_leaderboard_name_save.Text = "Submit";
+            button_leaderboard_name_save.Font = new System.Drawing.Font("Comic Sans MS", 26F, FontStyle.Bold);
+            button_leaderboard_name_save.Location = new Point(305, 450);
+            button_leaderboard_name_save.Click += new EventHandler(save_name);
+
+
+            //Creates a listBox for the top 5 leaderboard
+            listBox_leaderboard = new ListBox();
+            listBox_leaderboard.FormattingEnabled = true;
+            listBox_leaderboard.Location = new System.Drawing.Point(251, 200);
+            listBox_leaderboard.Name = "listBox_leaderboard";
+            listBox_leaderboard.Size = new System.Drawing.Size(200, 200);
+            listBox_leaderboard.TabIndex = 0;
+            listBox_leaderboard.Font = new System.Drawing.Font("Comic Sans MS", 16F, FontStyle.Bold);          
+
 
             //Add all created controls to panel
             panel_results.Controls.Add(button_return);
             panel_results.Controls.Add(button_continue);
             panel_results.Controls.Add(label_score);
             panel_results.Controls.Add(label_win_lose);
+            panel_results.Controls.Add(button_leaderboard_name_save);
+            panel_results.Controls.Add(textbox_leaderboard);
+            panel_results.Controls.Add(listBox_leaderboard);
 
             //Add Panel to form
             this.Controls.Add(panel_results);
             label_win_lose.Show();
             label_score.Show();
-
             this.panel_results.BringToFront();
             
             //Depending on the player's score, it will say either they won or lost
@@ -494,16 +646,25 @@ namespace Mustashe_ic
             if (gamePlay.score >= passingScore)
             {
                 label_win_lose.Text = "You Win!";
+ 
                 //System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.WINNER);
                 //player.Play();
-               
+                listBox_leaderboard.Hide();
+                button_leaderboard_name_save.Show();
+                textbox_leaderboard.Show();            
             }
             else
             {
                 label_win_lose.Text = "You Lose!";
+                button_leaderboard_name_save.Hide();
+                textbox_leaderboard.Hide();
+                //listBox_leaderboard.Hide();
                 //System.Media.SoundPlayer player = new System.Media.SoundPlayer(global::Mustache_ic___V2.Properties.Resources.Price_Is_Right_loser_clip);
                 //player.Play();
+                get_leaderboard();
+                
             }
+            
         }
 
 
